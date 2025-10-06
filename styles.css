@@ -135,39 +135,99 @@ body.dark-theme {
 
 /* Hero Section */
 .hero {
-    margin-top: 100px;
+    margin-top: 80px;
     min-height: 100vh;
     display: flex;
-    align-items: flex-start;
-    padding: 0 20px 60px 20px;
+    align-items: center;
+    padding: 0;
+    position: relative;
 }
 
 .hero-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 60px;
-    align-items: flex-start;
+    max-width: 100%;
+    margin: 0;
+    display: flex;
+    align-items: center;
     padding-top: 0;
+    position: relative;
+    height: 100vh;
+    min-height: 100vh;
+    width: 100%;
 }
+
+/* Title overlay positioned over collage area */
+.hero-title-overlay {
+    position: absolute !important;
+    top: calc(50% - 152px) !important;
+    left: 0 !important;
+    right: 308px !important;
+    width: calc(100vw - 308px) !important;
+    height: auto !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999 !important;
+    pointer-events: none;
+    padding: 5px;
+    box-sizing: border-box;
+    margin: 0;
+    transform: translateY(-50%) !important;
+}
+
+/* Button overlay positioned over collage area */
+.hero-button-overlay {
+    position: absolute !important;
+    top: calc(50% + 16px) !important;
+    left: 237px !important;
+    right: 71px !important;
+    width: calc(100vw - 545px) !important;
+    height: auto !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9998 !important;
+    pointer-events: none;
+    padding: 5px;
+    box-sizing: border-box;
+    margin: 0;
+    transform: translateY(-50%) !important;
+}
+
 
 .hero-content {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateX(50px);
     transition: all 1.2s ease;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-end;
     text-align: right;
-    margin-right: 20px;
-    height: 500px;
+    padding: 0 40px;
+    position: relative;
+    z-index: 10;
+    width: 50%;
+    flex-shrink: 0;
 }
 
-.hero-content.animate {
-    opacity: 1;
-    transform: translateY(0);
+/* Title in overlay */
+.hero-title-overlay .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 58px;
+    font-weight: 600;
+    line-height: 1.2;
+    color: black;
+    text-align: right;
+    margin: 0 !important;
+    padding: 0 !important;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1.2s ease 0.3s, color 0.5s ease;
+    text-shadow: none;
+    max-width: 100%;
+    word-wrap: break-word;
+    white-space: pre-line;
+    position: relative !important;
 }
 
 .hero-title {
@@ -176,15 +236,46 @@ body.dark-theme {
     font-weight: 600;
     line-height: 1.2;
     margin-bottom: 40px;
-    color: inherit;
+    color: black;
     opacity: 0;
     transform: translateY(20px);
-    transition: opacity 1.2s ease 0.3s, transform 1.2s ease 0.3s, color 0.4s ease;
+    transition: opacity 1.2s ease 0.3s, transform 1.2s ease 0.3s, color 0.5s ease;
+    text-shadow: none;
 }
+
+.hero-collage {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    grid-auto-rows: auto;
+    gap: 5px;
+    padding: 20px;
+    height: 90vh;
+    max-height: 800px;
+    align-content: start;
+    justify-content: center;
+    align-items: start;
+    overflow: visible;
+    position: relative;
+    z-index: 1;
+    width: 50%;
+    flex-shrink: 0;
+}
+
+.hero-content.animate {
+    opacity: 1;
+    transform: translateX(0);
+}
+
 
 .hero-title.animate {
     opacity: 1;
     transform: translateY(0);
+}
+
+/* Override for overlay title */
+.hero-title-overlay .hero-title.animate {
+    opacity: 1;
+    transform: none !important;
 }
 
 .hero-button {
@@ -192,10 +283,10 @@ body.dark-theme {
     color: white;
     border: none;
     border-radius: 0;
-    padding: 20px 40px;
+    padding: 30px 60px;
     font-family: 'Manrope', sans-serif;
     font-weight: 200;
-    font-size: 16px;
+    font-size: 24px;
     cursor: pointer;
     transition: all 0.8s ease;
     position: relative;
@@ -204,6 +295,11 @@ body.dark-theme {
     transform: scale(0.8);
     text-decoration: none;
     display: inline-block;
+    pointer-events: auto;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .hero-button.animate {
@@ -211,40 +307,90 @@ body.dark-theme {
     transform: scale(1);
 }
 
-/* Image */
-.hero-image {
-    width: 500px !important;
-    height: 500px !important;
-    background-image: url('./images/1.jpg');
-    background-size: cover;
+/* Hero Collage Items */
+.hero-collage-item {
+    background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
-    opacity: 0;
-    transform: translateX(100px);
-    transition: all 1.2s ease 0.6s, filter 0.8s ease;
-    margin: 0 auto;
+    border-radius: 0;
+    opacity: 1;
+    transform: scale(1);
+    transition: all 1.2s ease, filter 0.5s ease;
     filter: brightness(1) contrast(1) saturate(1);
+    min-height: 50px;
+    min-width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
 }
 
-.hero-image.animate {
-    opacity: 1;
-    transform: translateX(0);
+/* Empty collage items */
+.hero-collage-item.empty {
+    background: transparent;
+    opacity: 0;
+    pointer-events: none;
+    min-width: 50px;
+    min-height: 50px;
+    width: 50px;
+    height: 50px;
 }
+
+
+
+/* Collage items will be automatically positioned by CSS Grid */
+
+.hero-collage-item.animate {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Collage items - 3 columns × 4 rows */
+/* Background images will be set by JavaScript */
+
 
 /* Theme-specific image filters */
-body:not(.dark-theme) .hero-image {
+body:not(.dark-theme) .hero-collage-item {
     filter: brightness(1) contrast(1) saturate(1);
 }
 
-body.dark-theme .hero-image {
-    filter: brightness(0.85) contrast(1.15) saturate(0.9);
+body.dark-theme .hero-collage-item {
+    filter: brightness(0.9) contrast(1.1) saturate(1);
+}
+
+/* Theme-specific title colors */
+body:not(.dark-theme) .hero-title {
+    color: black;
+    text-shadow: none;
+}
+
+body.dark-theme .hero-title {
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+
+/* Title overlay animation */
+.hero-title-overlay .hero-title.animate {
+    opacity: 1;
+}
+
+/* Title overlay theme colors */
+body:not(.dark-theme) .hero-title-overlay .hero-title {
+    color: black;
+    text-shadow: none;
+}
+
+body.dark-theme .hero-title-overlay .hero-title {
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 /* Responsive */
 @media (max-width: 768px) {
     .hero-container {
         grid-template-columns: 1fr;
-        gap: 40px;
+        gap: 0;
         text-align: center;
     }
 
@@ -256,10 +402,39 @@ body.dark-theme .hero-image {
         display: none;
     }
 
-    .hero-image {
-        width: 100%;
-        max-width: 500px;
-        height: 500px;
-        margin: 0 auto;
+    .hero {
+        min-height: 100vh;
     }
+
+    .hero-container {
+        display: flex;
+        flex-direction: column;
+        height: auto;
+    }
+
+    .hero-collage {
+        height: 65vh;
+        max-height: 550px;
+        gap: 3px;
+        padding: 10px;
+        grid-template-columns: repeat(3, auto);
+        justify-content: center;
+        overflow: visible;
+    }
+
+    .hero-content {
+        padding: 0 20px;
+        align-items: center;
+        text-align: center;
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: translateX(-50px);
+        max-width: none;
+    }
+    
+    .hero-content.animate {
+        transform: translateX(0);
+    }
+
 }
