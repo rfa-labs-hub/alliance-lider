@@ -44,12 +44,10 @@
                 <div class="hero-collage-item"></div>
                 <div class="hero-collage-item empty"></div>
                 <div class="hero-collage-item"></div>
+                <div class="hero-collage-item empty"></div>
                 <div class="hero-collage-item"></div>
                 <div class="hero-collage-item"></div>
-                <div class="hero-collage-item"></div>
-                <div class="hero-collage-item"></div>
-                <div class="hero-collage-item"></div>
-                <div class="hero-collage-item"></div>
+                <div class="hero-collage-item empty"></div>
                 <div class="hero-collage-item"></div>
             </div>
                    <!-- Title Overlay -->
@@ -61,8 +59,107 @@
                    <div class="hero-button-overlay">
                        <button class="hero-button">С минимальным отрывом от работы</button>
                    </div>
+                   <!-- Callback Container Left -->
+                   <div class="callback-container callback-container-left">
+                       <div class="callback-content">
+                           <h3 class="callback-title-left">Реквизиты</h3>
+                           <p class="callback-description-left">посмотрите реквизиты нашей компании</p>
+                           <button class="callback-button" onclick="openRequisitesModal()">Показать</button>
+                       </div>
+                   </div>
+                   <!-- Callback Container Right -->
+                   <div class="callback-container callback-container-right">
+                       <div class="callback-content">
+                           <h3 class="callback-title-right">Заказать звонок</h3>
+                           <p class="callback-description-right">Оставьте заявку и мы вам перезвоним</p>
+                           <button class="callback-button" onclick="openCallbackModal()">Заказать</button>
+                       </div>
+                   </div>
                </div>
            </section>
+
+           <!-- Callback Modal -->
+           <div id="callbackModal" class="modal">
+               <div class="modal-content">
+                   <span class="close" onclick="closeCallbackModal()">&times;</span>
+                   <h2>Заказать звонок</h2>
+                   <form class="callback-form">
+                       <div class="form-group">
+                           <label for="callbackName">Имя:</label>
+                           <input type="text" id="callbackName" name="name" required>
+                       </div>
+                       <div class="form-group">
+                           <label for="callbackPhone">Номер телефона:</label>
+                           <input type="tel" id="callbackPhone" name="phone" required>
+                       </div>
+                       <div class="form-group">
+                           <label for="callbackReason">Причина звонка:</label>
+                           <select id="callbackReason" name="reason" required>
+                               <option value="">Выберите причину</option>
+                               <option value="consultation">Консультация по обучению</option>
+                               <option value="pricing">Узнать стоимость</option>
+                               <option value="schedule">Уточнить расписание</option>
+                               <option value="other">Другое</option>
+                           </select>
+                       </div>
+                       <button type="submit" class="modal-submit-button">Заказать звонок</button>
+                   </form>
+               </div>
+           </div>
+
+           <!-- Requisites Modal -->
+           <div id="requisitesModal" class="modal">
+               <div class="modal-content">
+                   <span class="close" onclick="closeRequisitesModal()">&times;</span>
+                   <h2>Реквизиты АНО ДПО УЦ «Альянс-Лидер»</h2>
+                   <div class="requisites-content">
+                       <div class="requisites-item">
+                           <strong>Полное наименование:</strong>
+                           <p>Автономная некоммерческая организация дополнительного профессионального образования, учебный центр «Альянс-Лидер»</p>
+                       </div>
+                       <div class="requisites-item">
+                           <strong>Юридический, почтовый адрес:</strong>
+                           <p>454084, г. Челябинск, ул.Каслинская,77, оф.111</p>
+                       </div>
+                       <div class="requisites-item">
+                           <strong>Тел./факс:</strong>
+                           <p>+79028695364</p>
+                       </div>
+                       <div class="requisites-item">
+                           <strong>Электронная почта:</strong>
+                           <p></p>
+                       </div>
+                       <div class="requisites-item">
+                           <strong>ИНН:</strong>
+                           <p>745 299 0243</p>
+                       </div>
+                       <div class="requisites-item">
+                           <strong>КПП:</strong>
+                           <p>745 201 001</p>
+                       </div>
+                       <div class="requisites-item">
+                           <strong>Р/с:</strong>
+                           <p>40703810807910006566</p>
+                       </div>
+                       <div class="requisites-item">
+                           <strong>в Транспортном филиале ПАО «Челиндбанк»</strong>
+                           <p></p>
+                       </div>
+                       <div class="requisites-item">
+                           <strong>к/с:</strong>
+                           <p>30101810400000000711</p>
+                       </div>
+                       <div class="requisites-item">
+                           <strong>БИК:</strong>
+                           <p>047501711</p>
+                       </div>
+                       <div class="requisites-item">
+                           <strong>Директор:</strong>
+                           <p></p>
+                       </div>
+                   </div>
+               </div>
+           </div>
 
     <script src="script.js"></script>
 </body>
