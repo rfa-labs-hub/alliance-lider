@@ -23,7 +23,7 @@ function initHeroAnimations() {
     const heroButton = document.querySelector('.hero-button-overlay .hero-button');
     const heroCollage = document.querySelector('.hero-collage');
     const collageItems = document.querySelectorAll('.hero-collage .hero-collage-item');
-    const callbackContainers = document.querySelectorAll('.callback-container');
+    const callbackButtonContainer = document.querySelector('.callback-button-container');
 
     console.log('Initializing hero animations...');
     console.log('Hero title element:', heroTitle);
@@ -93,12 +93,12 @@ function initHeroAnimations() {
         }
     }, 1400);
 
-    // 5. Animate callback containers (staggered fade-in-up)
-    callbackContainers.forEach((container, index) => {
-        setTimeout(() => {
-            container.classList.add('animate');
-        }, 1800 + (index * 200));
-    });
+    // 5. Animate callback button (fade-in-up)
+    setTimeout(() => {
+        if (callbackButtonContainer) {
+            callbackButtonContainer.classList.add('animate');
+        }
+    }, 1800);
 }
 
 // Scroll animations for other elements
@@ -376,29 +376,13 @@ function closeCallbackModal() {
     document.body.style.overflow = 'auto'; // Restore scrolling
 }
 
-// Requisites Modal Functions
-function openRequisitesModal() {
-    const modal = document.getElementById('requisitesModal');
-    modal.style.display = 'block';
-    document.body.style.overflow = 'hidden'; // Prevent background scrolling
-}
-
-function closeRequisitesModal() {
-    const modal = document.getElementById('requisitesModal');
-    modal.style.display = 'none';
-    document.body.style.overflow = 'auto'; // Restore scrolling
-}
 
 // Close modal when clicking outside of it
 window.addEventListener('click', (event) => {
     const callbackModal = document.getElementById('callbackModal');
-    const requisitesModal = document.getElementById('requisitesModal');
     
     if (event.target === callbackModal) {
         closeCallbackModal();
-    }
-    if (event.target === requisitesModal) {
-        closeRequisitesModal();
     }
 });
 
@@ -406,7 +390,6 @@ window.addEventListener('click', (event) => {
 document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {
         closeCallbackModal();
-        closeRequisitesModal();
     }
 });
 
