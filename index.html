@@ -34,7 +34,7 @@
     </header>
 
     <!-- Hero Section -->
-    <section class="hero">
+    <section id="home" class="hero">
         <div class="hero-container">
                <div class="hero-content">
                </div>
@@ -57,6 +57,96 @@
                </div>
            </section>
 
+           <!-- About Section -->
+           <section id="about" class="about-section">
+               <div class="about-content">
+                   <h2 class="about-title">О компании</h2>
+                   
+                   <div class="about-grid">
+                       <div class="about-text-column">
+                           <p class="about-intro">АНО ДПО УЦ «Альянс-Лидер» оказывает образовательные услуги в сфере охраны труда и безопасности уже более 10 лет.</p>
+                           <button class="about-more-button" onclick="openAboutModal()">Подробнее</button>
+                       </div>
+                       
+                       <div class="about-image-column">
+                           <img src="images/1.jpg" alt="О компании" class="about-image">
+                       </div>
+                   </div>
+               </div>
+           </section>
+
+           <!-- Trust Section -->
+           <section id="trust" class="trust-section">
+               <div class="trust-content">
+                   <h2 class="trust-title">Почему нам доверяют?</h2>
+                   
+                   <div class="trust-grid">
+                       <div class="trust-item">
+                           <div class="trust-image">
+                               <img src="images/why/1.png" alt="Оптимальный выбор образовательных программ">
+                           </div>
+                           <p class="trust-text">Оптимальный выбор образовательных программ</p>
+                       </div>
+                       
+                       <div class="trust-item">
+                           <div class="trust-image">
+                               <img src="images/why/2.png" alt="Правовая помощь в трудовых спорах">
+                           </div>
+                           <p class="trust-text">Правовая помощь в трудовых спорах, расследование несчастных случаев</p>
+                       </div>
+                       
+                       <div class="trust-item">
+                           <div class="trust-image">
+                               <img src="images/why/3.png" alt="Выдача документов установленного образца">
+                           </div>
+                           <p class="trust-text">Выдача документов установленного образца</p>
+                       </div>
+                       
+                       <div class="trust-item">
+                           <div class="trust-image">
+                               <img src="images/why/4.png" alt="Дистанционные технологии">
+                           </div>
+                           <p class="trust-text">Применение дистанционных технологий, наличие современной материально-технической базы</p>
+                       </div>
+                       
+                       <div class="trust-item">
+                           <div class="trust-image">
+                               <img src="images/why/5.png" alt="Система скидок">
+                           </div>
+                           <p class="trust-text">Адаптивная система скидок и программа лояльности для постоянных клиентов</p>
+                       </div>
+                   </div>
+               </div>
+           </section>
+
+           <!-- About Modal -->
+           <div id="aboutModal" class="modal">
+               <div class="modal-content about-modal-content">
+                   <span class="close" onclick="closeAboutModal()">&times;</span>
+                   <h2>О компании</h2>
+                   
+                   <div class="about-modal-text">
+                       <p>АНО ДПО УЦ «Альянс-Лидер» оказывает образовательные услуги в сфере охраны труда и безопасности уже более 10 лет.</p>
+                       
+                       <p>Мы предлагаем оптимальный выбор образовательных программ для получения допуска к работе руководителей, специалистов и работников рабочих специальностей:</p>
+                       
+                       <ul class="about-modal-list">
+                           <li>первичное обучение</li>
+                           <li>повышение квалификации</li>
+                           <li>профессиональная переподготовка</li>
+                           <li>предаттестационная подготовка</li>
+                           <li>и другие</li>
+                       </ul>
+                       
+                       <p>Воспользоваться нашими услугами вы можете в любом удобном для вас формате: очно, дистанционно, с помощью видеозаписей отдельных лекции, презентаций или консультации.</p>
+                       
+                       <p>Помимо вопросов обучения персонала мы оказываем правовую помощь в расследовании несчастных случаев и урегулировании трудовых споров.</p>
+                       
+                       <p>Вся образовательная деятельность осуществляется на основании федеральной лицензии, а по окончании обучения студенты получают документы установленного образца и имеют возможность работать на предприятиях любой формы собственности по всей России.</p>
+                   </div>
+               </div>
+           </div>
+
            <!-- Callback Modal -->
            <div id="callbackModal" class="modal">
                <div class="modal-content">
@@ -64,24 +154,37 @@
                    <h2>Заказать звонок</h2>
                    <form class="callback-form">
                        <div class="form-group">
-                           <label for="callbackName">Имя:</label>
-                           <input type="text" id="callbackName" name="name" required>
+                           <label for="callbackName">Ваше имя:</label>
+                           <input type="text" id="callbackName" name="name" placeholder="Введите ваше имя" required>
                        </div>
                        <div class="form-group">
                            <label for="callbackPhone">Номер телефона:</label>
-                           <input type="tel" id="callbackPhone" name="phone" required>
+                           <input type="tel" id="callbackPhone" name="phone" placeholder="+7 (999) 123-45-67" required>
                        </div>
                        <div class="form-group">
-                           <label for="callbackReason">Причина звонка:</label>
-                           <select id="callbackReason" name="reason" required>
-                               <option value="">Выберите причину</option>
-                               <option value="consultation">Консультация по обучению</option>
-                               <option value="pricing">Узнать стоимость</option>
-                               <option value="schedule">Уточнить расписание</option>
-                               <option value="other">Другое</option>
-                           </select>
+                           <label for="callbackReason">Цель обращения:</label>
+                           <div class="custom-select">
+                               <select id="callbackReason" name="reason" required>
+                                   <option value="">Выберите цель</option>
+                                   <option value="consultation">Консультация</option>
+                                   <option value="training">Запись на обучение</option>
+                                   <option value="qualification">Повышение квалификации</option>
+                                   <option value="legal">Правовая помощь</option>
+                                   <option value="documents">Вопрос по документам</option>
+                                   <option value="other">Другое</option>
+                               </select>
+                               <div class="custom-select-options" id="customSelectOptions">
+                                   <div class="custom-option" data-value="">Выберите цель</div>
+                                   <div class="custom-option" data-value="consultation">Консультация</div>
+                                   <div class="custom-option" data-value="training">Запись на обучение</div>
+                                   <div class="custom-option" data-value="qualification">Повышение квалификации</div>
+                                   <div class="custom-option" data-value="legal">Правовая помощь</div>
+                                   <div class="custom-option" data-value="documents">Вопрос по документам</div>
+                                   <div class="custom-option" data-value="other">Другое</div>
+                               </div>
+                           </div>
                        </div>
-                       <button type="submit" class="modal-submit-button">Заказать звонок</button>
+                       <button type="submit" class="modal-submit-button">Отправить заявку</button>
                    </form>
                </div>
            </div>

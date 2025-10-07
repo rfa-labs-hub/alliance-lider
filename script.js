@@ -113,6 +113,80 @@ function animateOnScroll() {
             element.classList.add('animate');
         }
     });
+
+    // Animate about section elements
+    animateAboutSection();
+    
+    // Animate trust section elements
+    animateTrustSection();
+}
+
+// Animate about section elements
+function animateAboutSection() {
+    const aboutTitle = document.querySelector('.about-title');
+    const aboutIntro = document.querySelector('.about-intro');
+    const aboutButton = document.querySelector('.about-more-button');
+    const aboutImage = document.querySelector('.about-image');
+    
+    if (aboutTitle) {
+        const aboutSection = document.querySelector('.about-section');
+        const sectionTop = aboutSection.getBoundingClientRect().top;
+        const sectionVisible = 200;
+        
+        if (sectionTop < window.innerHeight - sectionVisible) {
+            // Animate section container
+            aboutSection.classList.add('animate');
+            
+            // Animate title first
+            setTimeout(() => {
+                aboutTitle.classList.add('animate');
+            }, 200);
+            
+            // Animate intro text
+            setTimeout(() => {
+                if (aboutIntro) aboutIntro.classList.add('animate');
+            }, 400);
+            
+            // Animate button
+            setTimeout(() => {
+                if (aboutButton) aboutButton.classList.add('animate');
+            }, 600);
+            
+            // Animate image
+            setTimeout(() => {
+                if (aboutImage) aboutImage.classList.add('animate');
+            }, 800);
+        }
+    }
+}
+
+// Animate trust section elements
+function animateTrustSection() {
+    const trustTitle = document.querySelector('.trust-title');
+    const trustItems = document.querySelectorAll('.trust-item');
+    
+    if (trustTitle) {
+        const trustSection = document.querySelector('.trust-section');
+        const sectionTop = trustSection.getBoundingClientRect().top;
+        const sectionVisible = 200;
+        
+        if (sectionTop < window.innerHeight - sectionVisible) {
+            // Animate section container
+            trustSection.classList.add('animate');
+            
+            // Animate title first
+            setTimeout(() => {
+                trustTitle.classList.add('animate');
+            }, 200);
+            
+            // Animate items with staggered delays
+            trustItems.forEach((item, index) => {
+                setTimeout(() => {
+                    item.classList.add('animate');
+                }, 400 + (index * 150));
+            });
+        }
+    }
 }
 
 // Button click handler
@@ -290,6 +364,9 @@ window.addEventListener('load', () => {
     
     initHeroAnimations();
     
+    // Initialize active menu item
+    updateActiveMenuItem();
+    
     // Add click event to button
     const heroButton = document.querySelector('.hero-button');
     if (heroButton) {
@@ -299,13 +376,62 @@ window.addEventListener('load', () => {
     // Also initialize after a short delay to ensure DOM is fully ready
     setTimeout(() => {
         initHeroAnimations();
+        updateActiveMenuItem();
     }, 200);
 });
 
 window.addEventListener('scroll', () => {
     animateOnScroll();
     handleParallax();
+    handleHeaderScroll();
 });
+
+// Header scroll effect with glassmorphism
+function handleHeaderScroll() {
+    const header = document.querySelector('.header');
+    if (!header) return;
+
+    const scrollY = window.scrollY;
+    const scrollThreshold = 50; // Start effect after 50px scroll
+
+    if (scrollY > scrollThreshold) {
+        header.classList.add('scrolled');
+    } else {
+        header.classList.remove('scrolled');
+    }
+
+    // Update active menu item based on scroll position
+    updateActiveMenuItem();
+}
+
+// Update active menu item based on scroll position
+function updateActiveMenuItem() {
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-menu a');
+    
+    let currentSection = '';
+    
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop - 100;
+        const sectionHeight = section.offsetHeight;
+        
+        if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+            currentSection = section.getAttribute('id');
+        }
+    });
+    
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${currentSection}`) {
+            link.classList.add('active');
+        }
+    });
+    
+    // If no section is active, make the first link active
+    if (!currentSection && window.scrollY < 100) {
+        navLinks[0]?.classList.add('active');
+    }
+}
 
 // Parallax effect for hero collage
 function handleParallax() {
@@ -368,30 +494,131 @@ function openCallbackModal() {
     const modal = document.getElementById('callbackModal');
     modal.style.display = 'block';
     document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    
+    // Trigger animation
+    setTimeout(() => {
+        modal.classList.add('show');
+    }, 10);
 }
 
 function closeCallbackModal() {
     const modal = document.getElementById('callbackModal');
-    modal.style.display = 'none';
-    document.body.style.overflow = 'auto'; // Restore scrolling
+    modal.classList.remove('show');
+    
+    // Wait for animation to complete before hiding
+    setTimeout(() => {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto'; // Restore scrolling
+    }, 300);
 }
 
 
 // Close modal when clicking outside of it
 window.addEventListener('click', (event) => {
     const callbackModal = document.getElementById('callbackModal');
+    const aboutModal = document.getElementById('aboutModal');
     
     if (event.target === callbackModal) {
         closeCallbackModal();
     }
+    
+    if (event.target === aboutModal) {
+        closeAboutModal();
+    }
 });
+
+// About Modal Functions
+function openAboutModal() {
+    const modal = document.getElementById('aboutModal');
+    modal.style.display = 'block';
+    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    
+    // Trigger animation
+    setTimeout(() => {
+        modal.classList.add('show');
+    }, 10);
+}
+
+function closeAboutModal() {
+    const modal = document.getElementById('aboutModal');
+    modal.classList.remove('show');
+    
+    // Wait for animation to complete before hiding
+    setTimeout(() => {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto'; // Restore scrolling
+    }, 300);
+}
 
 // Close modal with Escape key
 document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {
         closeCallbackModal();
+        closeAboutModal();
     }
 });
+
+// Custom Select Functionality
+function initCustomSelect() {
+    const customSelect = document.querySelector('.custom-select');
+    const originalSelect = document.querySelector('#callbackReason');
+    const options = document.querySelectorAll('.custom-option');
+    
+    if (!customSelect || !originalSelect) return;
+    
+    // Create trigger element
+    const trigger = document.createElement('div');
+    trigger.className = 'custom-select-trigger';
+    trigger.innerHTML = `
+        <span class="custom-select-value">Выберите цель</span>
+        <div class="custom-select-arrow"></div>
+    `;
+    
+    // Insert trigger before options
+    customSelect.insertBefore(trigger, customSelect.querySelector('.custom-select-options'));
+    
+    // Handle trigger click
+    trigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        customSelect.classList.toggle('open');
+        const optionsContainer = customSelect.querySelector('.custom-select-options');
+        optionsContainer.style.display = customSelect.classList.contains('open') ? 'block' : 'none';
+    });
+    
+    // Handle option clicks
+    options.forEach(option => {
+        option.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const value = option.getAttribute('data-value');
+            const text = option.textContent;
+            
+            // Update trigger text
+            trigger.querySelector('.custom-select-value').textContent = text;
+            
+            // Update original select
+            originalSelect.value = value;
+            
+            // Update selected state
+            options.forEach(opt => opt.classList.remove('selected'));
+            option.classList.add('selected');
+            
+            // Close dropdown
+            customSelect.classList.remove('open');
+            customSelect.querySelector('.custom-select-options').style.display = 'none';
+            
+            // Trigger change event
+            originalSelect.dispatchEvent(new Event('change'));
+        });
+    });
+    
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!customSelect.contains(e.target)) {
+            customSelect.classList.remove('open');
+            customSelect.querySelector('.custom-select-options').style.display = 'none';
+        }
+    });
+}
 
 // Handle form submission (placeholder for now)
 document.addEventListener('DOMContentLoaded', () => {
@@ -405,5 +632,8 @@ document.addEventListener('DOMContentLoaded', () => {
             callbackForm.reset();
         });
     }
+    
+    // Initialize custom select
+    initCustomSelect();
 });
 
