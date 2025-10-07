@@ -119,6 +119,15 @@ function animateOnScroll() {
     
     // Animate trust section elements
     animateTrustSection();
+    
+    // Animate trust us section elements
+    animateTrustUsSection();
+    
+    // Animate staff section elements
+    animateStaffSection();
+    
+    // Animate documents section elements
+    animateDocumentsSection();
 }
 
 // Animate about section elements
@@ -179,12 +188,166 @@ function animateTrustSection() {
                 trustTitle.classList.add('animate');
             }, 200);
             
-            // Animate items with staggered delays
+            // Animate items with staggered delays (0.1s between each)
             trustItems.forEach((item, index) => {
                 setTimeout(() => {
                     item.classList.add('animate');
-                }, 400 + (index * 150));
+                }, 400 + (index * 100)); // 100ms = 0.1s delay between items
             });
+        }
+    }
+}
+
+// Animate trust us section elements
+function animateTrustUsSection() {
+    const trustUsTitle = document.querySelector('.trust-us-title');
+    const trustUsItems = document.querySelectorAll('.trust-us-item');
+    
+    if (trustUsTitle) {
+        const trustUsSection = document.querySelector('.trust-us-section');
+        const sectionTop = trustUsSection.getBoundingClientRect().top;
+        const sectionVisible = 200;
+        
+        if (sectionTop < window.innerHeight - sectionVisible) {
+            // Animate section container
+            trustUsSection.classList.add('animate');
+            
+            // Animate title first
+            setTimeout(() => {
+                trustUsTitle.classList.add('animate');
+            }, 200);
+            
+            // Animate items with staggered delays (0.1s between each)
+            trustUsItems.forEach((item, index) => {
+                setTimeout(() => {
+                    item.classList.add('animate');
+                }, 400 + (index * 100)); // 100ms = 0.1s delay between items
+            });
+        }
+    }
+}
+
+// Animate staff section elements
+function animateStaffSection() {
+    const staffTitle = document.querySelector('.staff-title');
+    const staffCards = document.querySelectorAll('.staff-card');
+    
+    if (staffTitle) {
+        const staffSection = document.querySelector('.staff-section');
+        const sectionTop = staffSection.getBoundingClientRect().top;
+        const sectionVisible = 200;
+        
+        if (sectionTop < window.innerHeight - sectionVisible) {
+            // Animate section container
+            staffSection.classList.add('animate');
+            
+            // Animate title first
+            setTimeout(() => {
+                staffTitle.classList.add('animate');
+            }, 200);
+            
+            // Animate cards with staggered delays (0.15s between each)
+            staffCards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.classList.add('animate');
+                }, 400 + (index * 150)); // 150ms = 0.15s delay between cards
+            });
+        }
+    }
+}
+
+// Animate documents section elements
+function animateDocumentsSection() {
+    const documentsTitle = document.querySelector('.documents-title');
+    const documentCards = document.querySelectorAll('.document-card');
+    
+    if (documentsTitle) {
+        const documentsSection = document.querySelector('.documents-section');
+        const sectionTop = documentsSection.getBoundingClientRect().top;
+        const sectionVisible = 200;
+        
+        if (sectionTop < window.innerHeight - sectionVisible) {
+            // Animate section container
+            documentsSection.classList.add('animate');
+            
+            // Animate title first
+            setTimeout(() => {
+                documentsTitle.classList.add('animate');
+            }, 200);
+            
+            // Animate cards with staggered delays
+            documentCards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.classList.add('animate');
+                }, 400 + (index * 100));
+            });
+        }
+    }
+}
+
+// Document Modal Functions
+let currentDocumentName = '';
+
+function openDocumentModal(documentName) {
+    currentDocumentName = documentName;
+    const modal = document.getElementById('documentModal');
+    const iframe = document.getElementById('documentIframe');
+    
+    // Map document names to file names
+    const documentMap = {
+        'ИНН': 'ИНН.pdf',
+        'Лицензия': 'Лицензия.pdf',
+        'О регистрации НКО': 'О регистрации НКО.pdf',
+        'Свидетельство ОРГН': 'Свидетельство ОРГН.pdf',
+        'уведомление об аккредитации': 'уведомление об аккредитации.pdf'
+    };
+    
+    const fileName = documentMap[documentName];
+    if (fileName) {
+        iframe.src = `images/docs/${fileName}`;
+        modal.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+        
+        // Trigger animation
+        setTimeout(() => {
+            modal.classList.add('show');
+        }, 10);
+    }
+}
+
+function closeDocumentModal() {
+    const modal = document.getElementById('documentModal');
+    const iframe = document.getElementById('documentIframe');
+    
+    modal.classList.remove('show');
+    
+    // Wait for animation to complete before hiding
+    setTimeout(() => {
+        modal.style.display = 'none';
+        iframe.src = ''; // Clear iframe source
+        document.body.style.overflow = 'auto';
+    }, 300);
+}
+
+function downloadDocument() {
+    if (currentDocumentName) {
+        const documentMap = {
+            'ИНН': 'ИНН.pdf',
+            'Лицензия': 'Лицензия.pdf',
+            'О регистрации НКО': 'О регистрации НКО.pdf',
+            'Свидетельство ОРГН': 'Свидетельство ОРГН.pdf',
+            'уведомление об аккредитации': 'уведомление об аккредитации.pdf'
+        };
+        
+        const fileName = documentMap[currentDocumentName];
+        if (fileName) {
+            // Create a temporary link to download the file
+            const link = document.createElement('a');
+            link.href = `images/docs/${fileName}`;
+            link.download = fileName;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
     }
 }
@@ -517,6 +680,7 @@ function closeCallbackModal() {
 window.addEventListener('click', (event) => {
     const callbackModal = document.getElementById('callbackModal');
     const aboutModal = document.getElementById('aboutModal');
+    const documentModal = document.getElementById('documentModal');
     
     if (event.target === callbackModal) {
         closeCallbackModal();
@@ -524,6 +688,10 @@ window.addEventListener('click', (event) => {
     
     if (event.target === aboutModal) {
         closeAboutModal();
+    }
+    
+    if (event.target === documentModal) {
+        closeDocumentModal();
     }
 });
 
@@ -555,6 +723,7 @@ document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {
         closeCallbackModal();
         closeAboutModal();
+        closeDocumentModal();
     }
 });
 
@@ -635,5 +804,33 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Initialize custom select
     initCustomSelect();
+    
+    // Initialize Yandex Map
+    initYandexMap();
 });
+
+// Yandex Map initialization
+function initYandexMap() {
+    if (typeof ymaps !== 'undefined') {
+        ymaps.ready(function () {
+            const map = new ymaps.Map('map', {
+                center: [55.1644, 61.4368], // Координаты Челябинска
+                zoom: 15,
+                controls: ['zoomControl', 'fullscreenControl']
+            });
+
+            // Добавляем метку
+            const placemark = new ymaps.Placemark([55.1644, 61.4368], {
+                balloonContent: 'АНО ДПО УЦ «Альянс-Лидер»<br>г. Челябинск, ул. Культуры, д. 77'
+            }, {
+                preset: 'islands#redDotIcon',
+                iconColor: '#d45319'
+            });
+
+            map.geoObjects.add(placemark);
+        });
+    } else {
+        console.log('Yandex Maps API not loaded');
+    }
+}
 

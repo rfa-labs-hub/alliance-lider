@@ -15,12 +15,14 @@
     <header class="header">
         <div class="header-container">
             <div class="logo">
-                <img src="images/logo.png" alt="Логотип">
+                <a href="index.html">
+                    <img src="images/logo.png" alt="Логотип">
+                </a>
             </div>
             <nav>
                 <ul class="nav-menu">
                     <li><a href="#home">Главная</a></li>
-                    <li><a href="#services">Наши услуги</a></li>
+                    <li><a href="services.html">Наши услуги</a></li>
                     <li><a href="#investigations">Расследования несчастных случаев</a></li>
                     <li><a href="#info">Информация</a></li>
                     <li><a href="#cooperation">Для сотрудничества</a></li>
@@ -75,6 +77,51 @@
                </div>
            </section>
 
+           <!-- Trust Us Section -->
+           <section id="trust-us" class="trust-us-section">
+               <div class="trust-us-content">
+                   <h2 class="trust-us-title">Нам доверяют</h2>
+                   
+                   <div class="trust-us-grid">
+                       <div class="trust-us-item">
+                           <div class="trust-us-logo">
+                               <img src="images/friends/1.png" alt="Партнёр 1">
+                           </div>
+                       </div>
+                       
+                       <div class="trust-us-item">
+                           <div class="trust-us-logo">
+                               <img src="images/friends/2.png" alt="Партнёр 2">
+                           </div>
+                       </div>
+                       
+                       <div class="trust-us-item">
+                           <div class="trust-us-logo">
+                               <img src="images/friends/3.png" alt="Партнёр 3">
+                           </div>
+                       </div>
+                       
+                       <div class="trust-us-item">
+                           <div class="trust-us-logo">
+                               <img src="images/friends/4.png" alt="Партнёр 4">
+                           </div>
+                       </div>
+                       
+                       <div class="trust-us-item">
+                           <div class="trust-us-logo">
+                               <img src="images/friends/5.png" alt="Партнёр 5">
+                           </div>
+                       </div>
+                       
+                       <div class="trust-us-item">
+                           <div class="trust-us-logo">
+                               <img src="images/friends/6.png" alt="Партнёр 6">
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </section>
+
            <!-- Trust Section -->
            <section id="trust" class="trust-section">
                <div class="trust-content">
@@ -114,6 +161,99 @@
                                <img src="images/why/5.png" alt="Система скидок">
                            </div>
                            <p class="trust-text">Адаптивная система скидок и программа лояльности для постоянных клиентов</p>
+                       </div>
+                   </div>
+               </div>
+           </section>
+
+           <!-- Staff Section -->
+           <section id="staff" class="staff-section">
+               <div class="staff-content">
+                   <h2 class="staff-title">Наши сотрудники</h2>
+                   
+                   <div class="staff-grid">
+                       <div class="staff-card">
+                           <div class="staff-photo">
+                               <div class="photo-placeholder"></div>
+                           </div>
+                           <h3 class="staff-name">Иванов Иван Иванович</h3>
+                           <p class="staff-position">Директор</p>
+                       </div>
+                       
+                       <div class="staff-card">
+                           <div class="staff-photo">
+                               <div class="photo-placeholder"></div>
+                           </div>
+                           <h3 class="staff-name">Петрова Анна Сергеевна</h3>
+                           <p class="staff-position">Заместитель директора</p>
+                       </div>
+                       
+                       <div class="staff-card">
+                           <div class="staff-photo">
+                               <div class="photo-placeholder"></div>
+                           </div>
+                           <h3 class="staff-name">Сидоров Михаил Петрович</h3>
+                           <p class="staff-position">Ведущий специалист</p>
+                       </div>
+                       
+                       <div class="staff-card">
+                           <div class="staff-photo">
+                               <div class="photo-placeholder"></div>
+                           </div>
+                           <h3 class="staff-name">Козлова Елена Владимировна</h3>
+                           <p class="staff-position">Специалист по обучению</p>
+                       </div>
+                       
+                       <div class="staff-card">
+                           <div class="staff-photo">
+                               <div class="photo-placeholder"></div>
+                           </div>
+                           <h3 class="staff-name">Морозов Дмитрий Александрович</h3>
+                           <p class="staff-position">Методист</p>
+                       </div>
+                   </div>
+               </div>
+           </section>
+
+           <!-- Documents Section -->
+           <section id="documents" class="documents-section">
+               <div class="documents-content">
+                   <h2 class="documents-title">Наши документы</h2>
+                   
+                   <div class="documents-grid">
+                       <div class="document-card" onclick="openDocumentModal('ИНН')">
+                           <div class="document-preview">
+                               <img src="images/docs_prew/ИНН.png" alt="ИНН">
+                           </div>
+                           <p class="document-name">ИНН</p>
+                       </div>
+                       
+                       <div class="document-card" onclick="openDocumentModal('Лицензия')">
+                           <div class="document-preview">
+                               <img src="images/docs_prew/Лицензия-1.png" alt="Лицензия">
+                           </div>
+                           <p class="document-name">Лицензия</p>
+                       </div>
+                       
+                       <div class="document-card" onclick="openDocumentModal('О регистрации НКО')">
+                           <div class="document-preview">
+                               <img src="images/docs_prew/О регистрации НКО.png" alt="О регистрации НКО">
+                           </div>
+                           <p class="document-name">О регистрации НКО</p>
+                       </div>
+                       
+                       <div class="document-card" onclick="openDocumentModal('Свидетельство ОРГН')">
+                           <div class="document-preview">
+                               <img src="images/docs_prew/Свидетельство ОРГН.png" alt="Свидетельство ОРГН">
+                           </div>
+                           <p class="document-name">Свидетельство ОРГН</p>
+                       </div>
+                       
+                       <div class="document-card" onclick="openDocumentModal('уведомление об аккредитации')">
+                           <div class="document-preview">
+                               <img src="images/docs_prew/уведомление об аккредитации.png" alt="Уведомление об аккредитации">
+                           </div>
+                           <p class="document-name">Уведомление об аккредитации</p>
                        </div>
                    </div>
                </div>
@@ -189,7 +329,54 @@
                </div>
            </div>
 
+           <!-- Document Modal -->
+           <div id="documentModal" class="modal">
+               <div class="modal-content document-modal-content">
+                   <span class="close" onclick="closeDocumentModal()">&times;</span>
+                   <div class="document-viewer">
+                       <iframe id="documentIframe" src="" frameborder="0"></iframe>
+                   </div>
+                   <div class="document-actions">
+                       <button class="download-button" onclick="downloadDocument()">Скачать PDF</button>
+                   </div>
+               </div>
+           </div>
 
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-left">
+                <h3 class="footer-title">Контакты</h3>
+                <div class="contact-list">
+                    <div class="contact-item">
+                        <span class="contact-label">Телефон:</span>
+                        <a href="tel:+79028695364" class="contact-link">+7 (902) 869-53-64</a>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-label">Электронная почта:</span>
+                        <a href="mailto:example@example.com" class="contact-link">example@example.com</a>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-label">Адрес:</span>
+                        <span class="contact-text">г. Челябинск, ул. Культуры, д. 77</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-right">
+                <div class="map-container">
+                    <div id="map" class="yandex-map"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="footer-line"></div>
+            <p class="footer-copyright">© АНО ДПО УЦ «Альянс-Лидер», 2025. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=YOUR_API_KEY&lang=ru_RU" type="text/javascript"></script>
     <script src="script.js"></script>
 </body>
 </html>

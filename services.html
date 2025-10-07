@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Наши услуги - АНО ДПО УЦ «Альянс-Лидер»</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Manrope:wght@200;300;400;500;600;700;800&family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/phosphor-icons"></script>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="services.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="images/logo.png" alt="Логотип">
+                </a>
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="services.html" class="active">Наши услуги</a></li>
+                    <li><a href="#investigations">Расследования несчастных случаев</a></li>
+                    <li><a href="#info">Информация</a></li>
+                    <li><a href="#cooperation">Для сотрудничества</a></li>
+                    <li><a href="#account">Личный кабинет</a></li>
+                </ul>
+            </nav>
+            <button class="theme-toggle" onclick="toggleTheme()">
+                <i class="ph ph-circle-half"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Services Page -->
+    <main class="services-page">
+        <!-- Left Categories Panel -->
+        <aside class="categories-panel" id="categoriesPanel">
+            <div class="panel-content">
+                <h2 class="panel-title">Категории услуг</h2>
+                <ul class="categories-list">
+                    <li class="category-item" data-category="labor-protection">
+                        <div class="category-icon">
+                            <img src="images/services/1.png" alt="Обучение охране труда">
+                        </div>
+                        <span class="category-name">Обучение охране труда</span>
+                    </li>
+                    <li class="category-item" data-category="electrical-safety">
+                        <div class="category-icon">
+                            <img src="images/services/2.png" alt="Электробезопасность">
+                        </div>
+                        <span class="category-name">Электробезопасность</span>
+                    </li>
+                    <li class="category-item" data-category="height-work">
+                        <div class="category-icon">
+                            <img src="images/services/3.png" alt="Работы на высоте">
+                        </div>
+                        <span class="category-name">Работы на высоте</span>
+                    </li>
+                    <li class="category-item" data-category="confined-spaces">
+                        <div class="category-icon">
+                            <img src="images/services/4.png" alt="Работы в ограниченных и замкнутых пространствах">
+                        </div>
+                        <span class="category-name">Работы в ограниченных и замкнутых пространствах</span>
+                    </li>
+                    <li class="category-item" data-category="fire-safety">
+                        <div class="category-icon">
+                            <img src="images/services/5.png" alt="Пожарная безопасность">
+                        </div>
+                        <span class="category-name">Пожарная безопасность</span>
+                    </li>
+                    <li class="category-item" data-category="industrial-safety">
+                        <div class="category-icon">
+                            <img src="images/services/6.png" alt="Промышленная безопасность">
+                        </div>
+                        <span class="category-name">Промышленная безопасность</span>
+                    </li>
+                    <li class="category-item" data-category="worker-professions">
+                        <div class="category-icon">
+                            <img src="images/services/7.png" alt="Обучение на рабочие профессии">
+                        </div>
+                        <span class="category-name">Обучение на рабочие профессии</span>
+                    </li>
+                    <li class="category-item" data-category="civil-defense">
+                        <div class="category-icon">
+                            <img src="images/services/8.png" alt="Гражданская оборона">
+                        </div>
+                        <span class="category-name">Гражданская оборона</span>
+                    </li>
+                    <li class="category-item" data-category="sro">
+                        <div class="category-icon">
+                            <img src="images/services/9.png" alt="СРО">
+                        </div>
+                        <span class="category-name">СРО (строительство, реконструкция)</span>
+                    </li>
+                    <li class="category-item" data-category="risk-assessment">
+                        <div class="category-icon">
+                            <img src="images/services/10.png" alt="Оценка профрисков">
+                        </div>
+                        <span class="category-name">Оценка профрисков</span>
+                    </li>
+                    <li class="category-item" data-category="accident-investigation">
+                        <div class="category-icon">
+                            <img src="images/services/11.png" alt="Расследование несчастных случаев">
+                        </div>
+                        <span class="category-name">Расследование несчастных случаев</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="panel-indicator" id="panelIndicator">
+                <div class="indicator-dot"></div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <section class="services-content">
+            <div class="content-container">
+                <div class="content-card">
+                    <div class="content-placeholder" id="contentPlaceholder">
+                        <h2>Выберите категорию слева, чтобы увидеть информацию</h2>
+                    </div>
+                    
+                    <div class="category-content" id="categoryContent" style="display: none;">
+                        <h2 class="content-title" id="contentTitle"></h2>
+                        <div class="content-body" id="contentBody"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-left">
+                <h3 class="footer-title">Контакты</h3>
+                <div class="contact-list">
+                    <div class="contact-item">
+                        <span class="contact-label">Телефон:</span>
+                        <a href="tel:+79028695364" class="contact-link">+7 (902) 869-53-64</a>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-label">Электронная почта:</span>
+                        <a href="mailto:example@example.com" class="contact-link">example@example.com</a>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-label">Адрес:</span>
+                        <span class="contact-text">г. Челябинск, ул. Культуры, д. 77</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-right">
+                <div class="map-container">
+                    <div id="map" class="yandex-map"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="footer-line"></div>
+            <p class="footer-copyright">© АНО ДПО УЦ «Альянс-Лидер», 2025. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=YOUR_API_KEY&lang=ru_RU" type="text/javascript"></script>
+
+    <script src="script.js"></script>
+    <script src="services.js"></script>
+</body>
+</html>
