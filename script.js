@@ -566,6 +566,17 @@ window.addEventListener('load', () => {
     }, 200);
 });
 
+// Additional initialization for Chrome compatibility
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM ready - Chrome compatibility check');
+    
+    // Force re-initialization of dropdowns after a delay
+    setTimeout(() => {
+        console.log('Re-initializing dropdowns for Chrome...');
+        initDropdownMenus();
+    }, 100);
+});
+
 window.addEventListener('scroll', () => {
     animateOnScroll();
     handleParallax();
@@ -865,9 +876,17 @@ function initDropdownMenus() {
     const dropdowns = document.querySelectorAll('.dropdown');
     console.log('Found dropdowns:', dropdowns.length);
     
-    // Force close all dropdowns on initialization
+    // Ensure all dropdowns are closed on initialization
     dropdowns.forEach(dropdown => {
         dropdown.classList.remove('active');
+        const menu = dropdown.querySelector('.dropdown-menu');
+        if (menu) {
+            console.log('Dropdown menu found, ensuring it\'s hidden');
+            // Force hide dropdown menu for Chrome compatibility
+            menu.style.opacity = '0';
+            menu.style.visibility = 'hidden';
+            menu.style.transform = 'translateY(-10px)';
+        }
     });
     
     dropdowns.forEach(dropdown => {
@@ -878,6 +897,12 @@ function initDropdownMenus() {
         dropdown.addEventListener('mouseenter', () => {
             if (window.innerWidth > 768) {
                 dropdown.classList.add('active');
+                // Reset inline styles to allow CSS to take over
+                if (dropdownMenu) {
+                    dropdownMenu.style.opacity = '';
+                    dropdownMenu.style.visibility = '';
+                    dropdownMenu.style.transform = '';
+                }
             }
         });
         
@@ -893,6 +918,13 @@ function initDropdownMenus() {
                 if (window.innerWidth <= 768) {
                     e.preventDefault();
                     dropdown.classList.toggle('active');
+                    
+                    // Reset inline styles for mobile
+                    if (dropdownMenu) {
+                        dropdownMenu.style.opacity = '';
+                        dropdownMenu.style.visibility = '';
+                        dropdownMenu.style.transform = '';
+                    }
                     
                     // Close other dropdowns
                     dropdowns.forEach(otherDropdown => {
@@ -973,13 +1005,6 @@ function handleCrossPageNavigation() {
 // Handle form submission (placeholder for now)
 document.addEventListener('DOMContentLoaded', () => {
     console.log('DOM Content Loaded');
-    
-    // Force close all dropdowns immediately
-    const dropdowns = document.querySelectorAll('.dropdown');
-    dropdowns.forEach(dropdown => {
-        dropdown.classList.remove('active');
-    });
-    console.log('Force closed all dropdowns on DOM ready');
     
     const callbackForm = document.querySelector('.callback-form');
     if (callbackForm) {
