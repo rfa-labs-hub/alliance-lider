@@ -211,6 +211,13 @@ body.dark-theme {
     position: relative;
 }
 
+/* Force hide all dropdowns on page load */
+.dropdown .dropdown-menu {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transform: translateY(-10px) !important;
+}
+
 .dropdown-menu {
     position: absolute;
     top: 100%;
@@ -239,9 +246,9 @@ body.dark-theme .dropdown-menu {
 
 .dropdown:hover .dropdown-menu,
 .dropdown.active .dropdown-menu {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateY(0) !important;
 }
 
 .dropdown-menu li {
@@ -278,8 +285,8 @@ body.dark-theme .dropdown-link {
 @media (max-width: 768px) {
     .dropdown-menu {
         position: static;
-        opacity: 1;
-        visibility: visible;
+        opacity: 0;
+        visibility: hidden;
         transform: none;
         box-shadow: none;
         border: none;
@@ -288,13 +295,15 @@ body.dark-theme .dropdown-link {
         margin: 0;
         max-height: 0;
         overflow: hidden;
-        transition: max-height 0.3s ease;
+        transition: max-height 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
         min-width: auto;
         max-width: none;
     }
     
     .dropdown.active .dropdown-menu {
-        max-height: 800px;
+        max-height: 800px !important;
+        opacity: 1 !important;
+        visibility: visible !important;
     }
     
     .dropdown-link {

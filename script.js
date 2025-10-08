@@ -537,6 +537,8 @@ window.addEventListener('beforeunload', () => {
 
 // Initialize animations and event listeners
 window.addEventListener('load', () => {
+    console.log('Page loaded, initializing...');
+    
     // Prevent any auto-scroll
     if (window.scrollY > 0) {
         window.scrollTo(0, window.scrollY);
@@ -558,6 +560,7 @@ window.addEventListener('load', () => {
     
     // Also initialize after a short delay to ensure DOM is fully ready
     setTimeout(() => {
+        console.log('Delayed initialization...');
         initHeroAnimations();
         updateActiveMenuItem();
     }, 200);
@@ -686,6 +689,7 @@ window.addEventListener('resize', () => {
         dropdowns.forEach(dropdown => {
             dropdown.classList.remove('active');
         });
+        console.log('Closed all dropdowns on resize');
     }, 250);
 });
 
@@ -857,7 +861,14 @@ function closeRequisitesModal() {
 
 // Dropdown Menu Functionality
 function initDropdownMenus() {
+    console.log('Initializing dropdown menus...');
     const dropdowns = document.querySelectorAll('.dropdown');
+    console.log('Found dropdowns:', dropdowns.length);
+    
+    // Force close all dropdowns on initialization
+    dropdowns.forEach(dropdown => {
+        dropdown.classList.remove('active');
+    });
     
     dropdowns.forEach(dropdown => {
         const navLink = dropdown.querySelector('.nav-link');
@@ -961,6 +972,15 @@ function handleCrossPageNavigation() {
 
 // Handle form submission (placeholder for now)
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM Content Loaded');
+    
+    // Force close all dropdowns immediately
+    const dropdowns = document.querySelectorAll('.dropdown');
+    dropdowns.forEach(dropdown => {
+        dropdown.classList.remove('active');
+    });
+    console.log('Force closed all dropdowns on DOM ready');
+    
     const callbackForm = document.querySelector('.callback-form');
     if (callbackForm) {
         callbackForm.addEventListener('submit', (event) => {
