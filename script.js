@@ -59,7 +59,7 @@ function initHeroAnimations() {
             console.log('Collage classes after animation:', heroCollage.className);
             console.log('Collage computed styles:', window.getComputedStyle(heroCollage).opacity);
         } else {
-            console.log('Collage element not found');
+            // Collage element not found - probably on services page
         }
     }, 100);
 
@@ -82,7 +82,7 @@ function initHeroAnimations() {
             console.log('Title classes after animation:', heroTitle.className);
             console.log('Title computed styles:', window.getComputedStyle(heroTitle).opacity);
         } else {
-            console.log('Title element not found');
+            // Title element not found - probably on services page
         }
     }, 1200);
 
@@ -128,6 +128,9 @@ function animateOnScroll() {
     
     // Animate documents section elements
     animateDocumentsSection();
+    
+    // Animate footer elements
+    animateFooter();
 }
 
 // Animate about section elements
@@ -281,6 +284,20 @@ function animateDocumentsSection() {
                     card.classList.add('animate');
                 }, 400 + (index * 100));
             });
+        }
+    }
+}
+
+// Animate footer elements
+function animateFooter() {
+    const footer = document.querySelector('.footer');
+    
+    if (footer) {
+        const footerTop = footer.getBoundingClientRect().top;
+        const footerVisible = 200;
+        
+        if (footerTop < window.innerHeight - footerVisible) {
+            footer.classList.add('animate');
         }
     }
 }
@@ -530,6 +547,9 @@ window.addEventListener('load', () => {
     // Initialize active menu item
     updateActiveMenuItem();
     
+    // Initialize active navigation
+    initActiveNavigation();
+    
     // Add click event to button
     const heroButton = document.querySelector('.hero-button');
     if (heroButton) {
@@ -583,16 +603,27 @@ function updateActiveMenuItem() {
         }
     });
     
-    navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === `#${currentSection}`) {
-            link.classList.add('active');
+    // Only update section-based navigation if we're on the main page
+    const currentFile = window.location.pathname.split('/').pop();
+    if (currentFile === 'index.html' || currentFile === '' || window.location.pathname === '/' || window.location.pathname.endsWith('/')) {
+        navLinks.forEach(link => {
+            const linkHref = link.getAttribute('href');
+            // Only remove active class from section links, not page links
+            if (linkHref && linkHref.startsWith('#')) {
+                link.classList.remove('active');
+                if (linkHref === `#${currentSection}`) {
+                    link.classList.add('active');
+                }
+            }
+        });
+        
+        // If no section is active, make the first section link active
+        if (!currentSection && window.scrollY < 100) {
+            const firstSectionLink = document.querySelector('.nav-menu a[href^="#"]');
+            if (firstSectionLink) {
+                firstSectionLink.classList.add('active');
+            }
         }
-    });
-    
-    // If no section is active, make the first link active
-    if (!currentSection && window.scrollY < 100) {
-        navLinks[0]?.classList.add('active');
     }
 }
 
@@ -649,6 +680,12 @@ window.addEventListener('resize', () => {
                 }
             });
         }
+        
+        // Close all dropdowns on resize to prevent layout issues
+        const dropdowns = document.querySelectorAll('.dropdown');
+        dropdowns.forEach(dropdown => {
+            dropdown.classList.remove('active');
+        });
     }, 250);
 });
 
@@ -681,6 +718,7 @@ window.addEventListener('click', (event) => {
     const callbackModal = document.getElementById('callbackModal');
     const aboutModal = document.getElementById('aboutModal');
     const documentModal = document.getElementById('documentModal');
+    const requisitesModal = document.getElementById('requisitesModal');
     
     if (event.target === callbackModal) {
         closeCallbackModal();
@@ -692,6 +730,10 @@ window.addEventListener('click', (event) => {
     
     if (event.target === documentModal) {
         closeDocumentModal();
+    }
+    
+    if (event.target === requisitesModal) {
+        closeRequisitesModal();
     }
 });
 
@@ -724,6 +766,7 @@ document.addEventListener('keydown', (event) => {
         closeCallbackModal();
         closeAboutModal();
         closeDocumentModal();
+        closeRequisitesModal();
     }
 });
 
@@ -789,6 +832,133 @@ function initCustomSelect() {
     });
 }
 
+// Requisites Modal Functions
+function openRequisitesModal() {
+    const modal = document.getElementById('requisitesModal');
+    modal.style.display = 'block';
+    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    
+    // Trigger animation
+    setTimeout(() => {
+        modal.classList.add('show');
+    }, 10);
+}
+
+function closeRequisitesModal() {
+    const modal = document.getElementById('requisitesModal');
+    modal.classList.remove('show');
+    
+    // Wait for animation to complete before hiding
+    setTimeout(() => {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto'; // Restore scrolling
+    }, 300);
+}
+
+// Dropdown Menu Functionality
+function initDropdownMenus() {
+    const dropdowns = document.querySelectorAll('.dropdown');
+    
+    dropdowns.forEach(dropdown => {
+        const navLink = dropdown.querySelector('.nav-link');
+        const dropdownMenu = dropdown.querySelector('.dropdown-menu');
+        
+        // Desktop hover behavior
+        dropdown.addEventListener('mouseenter', () => {
+            if (window.innerWidth > 768) {
+                dropdown.classList.add('active');
+            }
+        });
+        
+        dropdown.addEventListener('mouseleave', () => {
+            if (window.innerWidth > 768) {
+                dropdown.classList.remove('active');
+            }
+        });
+        
+        // Mobile click behavior - only for dropdown items
+        if (dropdown) {
+            navLink.addEventListener('click', (e) => {
+                if (window.innerWidth <= 768) {
+                    e.preventDefault();
+                    dropdown.classList.toggle('active');
+                    
+                    // Close other dropdowns
+                    dropdowns.forEach(otherDropdown => {
+                        if (otherDropdown !== dropdown) {
+                            otherDropdown.classList.remove('active');
+                        }
+                    });
+                }
+            });
+        }
+        
+        // Handle dropdown link clicks
+        const dropdownLinks = dropdownMenu.querySelectorAll('.dropdown-link');
+        dropdownLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                const href = link.getAttribute('href');
+                
+                // Handle cross-page navigation with auto-scroll
+                if (href && href.includes('#')) {
+                    const [page, section] = href.split('#');
+                    const currentPage = window.location.pathname.split('/').pop();
+                    
+                    if (page && page !== '' && page !== currentPage) {
+                        // Navigate to different page with section
+                        e.preventDefault();
+                        window.location.href = href;
+                    } else if (section) {
+                        // Same page, just scroll to section
+                        e.preventDefault();
+                        scrollToSection(section);
+                    }
+                }
+                
+                // Close dropdown on mobile
+                if (window.innerWidth <= 768) {
+                    dropdown.classList.remove('active');
+                }
+            });
+        });
+    });
+    
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.dropdown')) {
+            dropdowns.forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+        }
+    });
+}
+
+// Smooth scroll to section
+function scrollToSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    if (section) {
+        const headerHeight = 80; // Height of fixed header
+        const sectionTop = section.offsetTop - headerHeight;
+        
+        window.scrollTo({
+            top: sectionTop,
+            behavior: 'smooth'
+        });
+    }
+}
+
+// Handle cross-page navigation with auto-scroll
+function handleCrossPageNavigation() {
+    const hash = window.location.hash;
+    if (hash) {
+        const sectionId = hash.substring(1);
+        setTimeout(() => {
+            scrollToSection(sectionId);
+        }, 100);
+    }
+}
+
+
 // Handle form submission (placeholder for now)
 document.addEventListener('DOMContentLoaded', () => {
     const callbackForm = document.querySelector('.callback-form');
@@ -805,9 +975,84 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize custom select
     initCustomSelect();
     
-    // Initialize Yandex Map
-    initYandexMap();
+    // Initialize dropdown menus
+    initDropdownMenus();
+    
+    
+    // Handle cross-page navigation
+    handleCrossPageNavigation();
+    
+    // Initialize Yandex Map (only on main page)
+    if (!document.querySelector('.services-page')) {
+        initYandexMap();
+    }
+    
+    // Initialize active navigation
+    initActiveNavigation();
+    
+    // Debug: Add click listener to all navigation links
+    const allNavLinks = document.querySelectorAll('.nav-menu a');
+    allNavLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            console.log('Navigation link clicked:', href);
+            
+            // If it's account.html, ensure it navigates properly
+            if (href === 'account.html') {
+                console.log('Account link clicked - allowing navigation');
+                // Don't prevent default - let browser handle it
+            }
+        });
+    });
 });
+
+// Active Navigation initialization
+function initActiveNavigation() {
+    const currentPage = window.location.pathname;
+    const currentFile = window.location.pathname.split('/').pop();
+    const navLinks = document.querySelectorAll('.nav-menu a');
+    
+    console.log('Current page:', currentPage);
+    console.log('Current file:', currentFile);
+    
+    navLinks.forEach(link => {
+        // Remove active class from all links
+        link.classList.remove('active');
+        
+        const linkHref = link.getAttribute('href');
+        console.log('Checking link:', linkHref);
+        
+        // Determine if this link should be active
+        let isActive = false;
+        
+        // Check for services page
+        if (currentFile === 'services.html' || currentPage.includes('services.html')) {
+            if (linkHref === 'services.html' || linkHref === './services.html') {
+                isActive = true;
+                console.log('Activating services link');
+            }
+        }
+        // Check for account page
+        else if (currentFile === 'account.html' || currentPage.includes('account.html')) {
+            if (linkHref === 'account.html' || linkHref === './account.html') {
+                isActive = true;
+                console.log('Activating account link');
+            }
+        }
+        // Check for main page (index.html, root, or empty)
+        else if (currentFile === 'index.html' || currentFile === '' || currentPage === '/' || currentPage.endsWith('/')) {
+            if (linkHref === 'index.html' || linkHref === './index.html' || linkHref === '/') {
+                isActive = true;
+                console.log('Activating main page link');
+            }
+        }
+        
+        if (isActive) {
+            link.classList.add('active');
+            console.log('Link activated:', linkHref);
+        }
+    });
+}
 
 // Yandex Map initialization
 function initYandexMap() {

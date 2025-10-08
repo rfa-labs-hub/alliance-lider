@@ -22,12 +22,35 @@
             </div>
             <nav>
                 <ul class="nav-menu">
-                    <li><a href="index.html">Главная</a></li>
-                    <li><a href="services.html" class="active">Наши услуги</a></li>
+                    <li class="nav-item dropdown">
+                        <a href="index.html" class="nav-link">Главная</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="index.html#about" class="dropdown-link">О компании</a></li>
+                            <li><a href="index.html#staff" class="dropdown-link">Наши сотрудники</a></li>
+                            <li><a href="#" class="dropdown-link" onclick="openRequisitesModal()">Реквизиты</a></li>
+                            <li><a href="index.html#documents" class="dropdown-link">Документы</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="services.html" class="nav-link">Наши услуги</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#labor-protection" class="dropdown-link">Обучение охране труда</a></li>
+                            <li><a href="#electrical-safety" class="dropdown-link">Электробезопасность</a></li>
+                            <li><a href="#height-work" class="dropdown-link">Работы на высоте</a></li>
+                            <li><a href="#confined-spaces" class="dropdown-link">Работы в ограниченных пространствах</a></li>
+                            <li><a href="#fire-safety" class="dropdown-link">Пожарная безопасность</a></li>
+                            <li><a href="#industrial-safety" class="dropdown-link">Промышленная безопасность</a></li>
+                            <li><a href="#worker-professions" class="dropdown-link">Обучение на рабочие профессии</a></li>
+                            <li><a href="#civil-defense" class="dropdown-link">Гражданская оборона</a></li>
+                            <li><a href="#sro" class="dropdown-link">СРО (строительство, реконструкция)</a></li>
+                            <li><a href="#risk-assessment" class="dropdown-link">Оценка профрисков</a></li>
+                            <li><a href="#accident-investigation" class="dropdown-link">Расследование несчастных случаев</a></li>
+                        </ul>
+                    </li>
                     <li><a href="#investigations">Расследования несчастных случаев</a></li>
                     <li><a href="#info">Информация</a></li>
                     <li><a href="#cooperation">Для сотрудничества</a></li>
-                    <li><a href="#account">Личный кабинет</a></li>
+                    <li><a href="account.html">Личный кабинет</a></li>
                 </ul>
             </nav>
             <button class="theme-toggle" onclick="toggleTheme()">
@@ -133,22 +156,73 @@
         </section>
     </main>
 
+    <!-- Requisites Modal -->
+    <div id="requisitesModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeRequisitesModal()">&times;</span>
+            <h2>Реквизиты организации</h2>
+            <div class="requisites-content">
+                <div class="requisites-item">
+                    <strong>Полное наименование:</strong>
+                    <p>Автономная некоммерческая организация дополнительного профессионального образования «Учебный центр «Альянс-Лидер»</p>
+                </div>
+                <div class="requisites-item">
+                    <strong>Сокращенное наименование:</strong>
+                    <p>АНО ДПО УЦ «Альянс-Лидер»</p>
+                </div>
+                <div class="requisites-item">
+                    <strong>ИНН:</strong>
+                    <p>7452000000</p>
+                </div>
+                <div class="requisites-item">
+                    <strong>КПП:</strong>
+                    <p>745201001</p>
+                </div>
+                <div class="requisites-item">
+                    <strong>ОГРН:</strong>
+                    <p>1027400000000</p>
+                </div>
+                <div class="requisites-item">
+                    <strong>Юридический адрес:</strong>
+                    <p>454091, г. Челябинск, ул. Культуры, д. 77</p>
+                </div>
+                <div class="requisites-item">
+                    <strong>Почтовый адрес:</strong>
+                    <p>454091, г. Челябинск, ул. Культуры, д. 77</p>
+                </div>
+                <div class="requisites-item">
+                    <strong>Телефон:</strong>
+                    <p>+7 (902) 869-53-64</p>
+                </div>
+                <div class="requisites-item">
+                    <strong>Email:</strong>
+                    <p>info@alliance-lider.ru</p>
+                </div>
+                <div class="requisites-item">
+                    <strong>Руководитель:</strong>
+                    <p>Иванов Иван Иванович</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer class="footer">
+        <div class="footer-accent-line"></div>
         <div class="footer-content">
             <div class="footer-left">
                 <h3 class="footer-title">Контакты</h3>
                 <div class="contact-list">
                     <div class="contact-item">
-                        <span class="contact-label">Телефон:</span>
+                        <i class="ph ph-phone contact-icon"></i>
                         <a href="tel:+79028695364" class="contact-link">+7 (902) 869-53-64</a>
                     </div>
                     <div class="contact-item">
-                        <span class="contact-label">Электронная почта:</span>
+                        <i class="ph ph-envelope contact-icon"></i>
                         <a href="mailto:example@example.com" class="contact-link">example@example.com</a>
                     </div>
                     <div class="contact-item">
-                        <span class="contact-label">Адрес:</span>
+                        <i class="ph ph-map-pin contact-icon"></i>
                         <span class="contact-text">г. Челябинск, ул. Культуры, д. 77</span>
                     </div>
                 </div>
@@ -160,12 +234,25 @@
                 </div>
             </div>
         </div>
-        
-        <div class="footer-bottom">
-            <div class="footer-line"></div>
-            <p class="footer-copyright">© АНО ДПО УЦ «Альянс-Лидер», 2025. Все права защищены.</p>
-        </div>
     </footer>
+    
+    <!-- Footer Bottom Bar -->
+    <div class="footer-bottom-bar">
+        <div class="footer-bottom-content">
+            <div class="footer-logo">
+                <img src="images/logo.png" alt="Логотип" class="footer-logo-img">
+            </div>
+            <p class="footer-copyright">© АНО ДПО УЦ «Альянс-Лидер», 2025</p>
+            <div class="footer-social">
+                <a href="#" class="social-link" title="Telegram">
+                    <i class="ph ph-telegram-logo"></i>
+                </a>
+                <a href="#" class="social-link" title="WhatsApp">
+                    <i class="ph ph-whatsapp-logo"></i>
+                </a>
+            </div>
+        </div>
+    </div>
 
     <script src="https://api-maps.yandex.ru/2.1/?apikey=YOUR_API_KEY&lang=ru_RU" type="text/javascript"></script>
 
