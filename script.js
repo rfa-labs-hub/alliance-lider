@@ -1,11 +1,302 @@
+// Preloader functionality
+let preloaderProgress = 0;
+let preloaderInterval;
+let isReturningVisitor = false;
+
+// Check if user is returning visitor
+function checkReturningVisitor() {
+    const lastVisit = localStorage.getItem('lastVisit');
+    const now = Date.now();
+    const oneDay = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+    
+    if (lastVisit && (now - parseInt(lastVisit)) < oneDay) {
+        isReturningVisitor = true;
+    }
+    
+    localStorage.setItem('lastVisit', now.toString());
+}
+
+// Simulate realistic loading progress
+function simulateLoading() {
+    const progressBar = document.getElementById('preloaderProgressBar');
+    const percentageElement = document.getElementById('preloaderPercentage');
+    
+    if (!progressBar || !percentageElement) return;
+    
+    // Realistic loading curve - starts slow, accelerates, then slows down at the end
+    const loadingSteps = [
+        { progress: 15, delay: 200 },
+        { progress: 28, delay: 300 },
+        { progress: 42, delay: 250 },
+        { progress: 58, delay: 200 },
+        { progress: 73, delay: 180 },
+        { progress: 85, delay: 150 },
+        { progress: 94, delay: 200 },
+        { progress: 100, delay: 300 }
+    ];
+    
+    let currentStep = 0;
+    
+    function updateProgress() {
+        if (currentStep < loadingSteps.length) {
+            const step = loadingSteps[currentStep];
+            preloaderProgress = step.progress;
+            
+            progressBar.style.width = preloaderProgress + '%';
+            percentageElement.textContent = preloaderProgress + '%';
+            
+            currentStep++;
+            
+            if (currentStep < loadingSteps.length) {
+                setTimeout(updateProgress, step.delay);
+            } else {
+                // Loading complete, hide preloader after a short delay
+                setTimeout(hidePreloader, 500);
+            }
+        }
+    }
+    
+    // Start loading simulation
+    setTimeout(updateProgress, 500);
+}
+
+// Hide preloader with smooth animation
+function hidePreloader() {
+    console.log('hidePreloader called');
+    const preloader = document.getElementById('preloader');
+    if (preloader) {
+        console.log('Preloader found, adding fade-out class');
+        preloader.classList.add('fade-out');
+        
+        // Remove preloader from DOM after animation
+        setTimeout(() => {
+            console.log('Preloader animation complete, hiding and initializing main page');
+            preloader.style.display = 'none';
+            // Initialize main page animations
+            initMainPageAnimations();
+            // Start hero image animation after preloader is hidden
+            startHeroImageAnimation();
+        }, 800);
+    } else {
+        console.error('Preloader element not found!');
+    }
+}
+
+// Initialize main page animations after preloader
+function initMainPageAnimations() {
+    // Initialize hero animations
+    initHeroAnimations();
+    
+    // Initialize other page elements
+    updateActiveMenuItem();
+    initActiveNavigation();
+    
+    // Add click event to button
+    const heroButton = document.querySelector('.hero-button');
+    if (heroButton) {
+        heroButton.addEventListener('click', handleButtonClick);
+    }
+    
+    // Initialize scroll animations
+    animateOnScroll();
+    
+    // Initialize callback button position
+    setTimeout(() => {
+        handleCallbackButtonTransform();
+    }, 100);
+}
+
+// Function to reset hero animation (for testing)
+function resetHeroAnimation() {
+    sessionStorage.removeItem('heroImageAnimated');
+    console.log('Hero animation reset - will animate on next page load');
+}
+
+// Clear sessionStorage on page load to ensure fresh animation
+function clearAnimationFlags() {
+    sessionStorage.removeItem('heroImageAnimated');
+    console.log('Cleared animation flags from sessionStorage');
+}
+
+// Function to test hero animation immediately (for testing)
+function testHeroAnimationNow() {
+    console.log('Testing hero animation immediately...');
+    const heroImage = document.querySelector('.hero-image');
+    if (heroImage) {
+        console.log('Hero image found, starting test animation');
+        heroImage.style.opacity = '0';
+        heroImage.style.transform = 'translateY(10px) scale(1.05)';
+        setTimeout(() => {
+            animateHeroImage(heroImage, 2000);
+        }, 100);
+    } else {
+        console.error('Hero image not found for testing');
+    }
+}
+
+// Function to test hero animation immediately (for testing)
+function testHeroAnimation() {
+    const heroImage = document.querySelector('.hero-image');
+    if (heroImage) {
+        console.log('Testing hero animation...');
+        console.log('Element found:', heroImage);
+        console.log('Element styles:', {
+            opacity: window.getComputedStyle(heroImage).opacity,
+            transform: window.getComputedStyle(heroImage).transform,
+            display: window.getComputedStyle(heroImage).display,
+            visibility: window.getComputedStyle(heroImage).visibility
+        });
+        
+        heroImage.style.opacity = '0';
+        heroImage.style.transform = 'translateY(20px) scale(0.8)';
+        heroImage.style.border = '5px solid red'; // Very visible border
+        
+        setTimeout(() => {
+            animateHeroImage(heroImage, 2000);
+        }, 100);
+    } else {
+        console.error('Hero image element not found!');
+    }
+}
+
+// Function to check if hero image element exists and is visible
+function checkHeroImage() {
+    const heroImage = document.querySelector('.hero-image');
+    if (heroImage) {
+        console.log('Hero image element found:', heroImage);
+        console.log('Element position:', heroImage.getBoundingClientRect());
+        console.log('Element computed styles:', {
+            opacity: window.getComputedStyle(heroImage).opacity,
+            transform: window.getComputedStyle(heroImage).transform,
+            display: window.getComputedStyle(heroImage).display,
+            visibility: window.getComputedStyle(heroImage).visibility,
+            zIndex: window.getComputedStyle(heroImage).zIndex
+        });
+        return true;
+    } else {
+        console.error('Hero image element not found!');
+        return false;
+    }
+}
+
+// Simple and visible hero image animation for testing
+function animateHeroImage(element, duration = 2000) {
+    console.log('animateHeroImage called with element:', element);
+    console.log('Element position:', element.getBoundingClientRect());
+    console.log('Animation duration:', duration);
+    
+    const startTime = performance.now();
+    let frameCount = 0;
+    
+    function animate(currentTime) {
+        frameCount++;
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        
+        // Simple linear animation for testing
+        const currentOpacity = progress;
+        const currentY = 10 * (1 - progress); // Move from 10px down to 0
+        const currentScale = 1.05 - (0.05 * progress); // Scale from 1.05 to 1.0
+        
+        // Apply styles with visible effects
+        element.style.opacity = currentOpacity;
+        element.style.transform = `translateY(${currentY}px) scale(${currentScale})`;
+        
+        // Log progress every 20 frames for less spam
+        if (frameCount % 20 === 0) {
+            console.log(`Animation progress: ${(progress * 100).toFixed(1)}% - opacity: ${currentOpacity.toFixed(2)}, transform: translateY(${currentY.toFixed(1)}px) scale(${currentScale.toFixed(2)})`);
+        }
+        
+        // Continue animation if not finished
+        if (progress < 1) {
+            requestAnimationFrame(animate);
+        } else {
+            console.log('Hero image animation completed!');
+            // Final state
+            element.style.opacity = '1';
+            element.style.transform = 'translateY(0) scale(1)';
+        }
+    }
+    
+    console.log('Starting requestAnimationFrame loop');
+    requestAnimationFrame(animate);
+}
+
+// Start hero image animation after preloader
+function startHeroImageAnimation() {
+    console.log('startHeroImageAnimation called');
+    const heroImage = document.querySelector('.hero-image');
+    
+    if (heroImage) {
+        console.log('Hero image element found:', heroImage);
+        console.log('Current hero image styles:', {
+            opacity: window.getComputedStyle(heroImage).opacity,
+            transform: window.getComputedStyle(heroImage).transform,
+            display: window.getComputedStyle(heroImage).display
+        });
+        
+        // Always animate hero image after preloader (remove sessionStorage check)
+        console.log('Starting hero image animation after preloader');
+        
+        // Set initial state
+        heroImage.style.opacity = '0';
+        heroImage.style.transform = 'translateY(10px) scale(1.05)';
+        heroImage.style.animation = 'none';
+        
+        console.log('Set initial state, starting animation in 100ms');
+        
+        // Start JavaScript animation
+        setTimeout(() => {
+            console.log('Starting animateHeroImage function');
+            animateHeroImage(heroImage, 1600);
+        }, 100);
+    } else {
+        console.error('Hero image element not found!');
+    }
+}
+
+// Initialize preloader
+function initPreloader() {
+    checkReturningVisitor();
+    
+    const preloader = document.getElementById('preloader');
+    if (!preloader) return;
+    
+    if (isReturningVisitor) {
+        // For returning visitors, show preloader for only 0.5 seconds
+        setTimeout(() => {
+            const progressBar = document.getElementById('preloaderProgressBar');
+            const percentageElement = document.getElementById('preloaderPercentage');
+            
+            if (progressBar && percentageElement) {
+                progressBar.style.width = '100%';
+                percentageElement.textContent = '100%';
+            }
+            
+            setTimeout(hidePreloader, 200);
+        }, 500);
+    } else {
+        // For new visitors, simulate full loading
+        simulateLoading();
+    }
+}
+
 // Theme toggle functionality
 function toggleTheme() {
     const body = document.body;
     const header = document.querySelector('.header');
+    const heroImage = document.querySelector('.hero-image');
     
     // Add transition class for smooth theme switching
     body.style.transition = 'background-color 0.4s ease, color 0.4s ease';
     header.style.transition = 'background-color 0.4s ease, color 0.4s ease';
+    
+    // Ensure hero image doesn't re-animate on theme change
+    if (heroImage) {
+        heroImage.style.animation = 'none';
+        heroImage.style.opacity = '1';
+        heroImage.style.transform = 'translateY(0) scale(1)';
+    }
     
     body.classList.toggle('dark-theme');
     header.classList.toggle('dark-theme');
@@ -24,12 +315,16 @@ function initHeroAnimations() {
     const heroCollage = document.querySelector('.hero-collage');
     const collageItems = document.querySelectorAll('.hero-collage .hero-collage-item');
     const callbackButtonContainer = document.querySelector('.callback-button-container');
+    const heroImage = document.querySelector('.hero-image');
 
     console.log('Initializing hero animations...');
     console.log('Hero title element:', heroTitle);
     console.log('Hero button element:', heroButton);
     console.log('Hero collage element:', heroCollage);
+    console.log('Hero image element:', heroImage);
     console.log('Collage items count:', collageItems.length);
+    
+    // Hero image animation is now handled separately in startHeroImageAnimation()
     
     // Check initial states and force them if needed
     if (heroCollage) {
@@ -539,30 +834,21 @@ window.addEventListener('beforeunload', () => {
 window.addEventListener('load', () => {
     console.log('Page loaded, initializing...');
     
+    // Clear animation flags to ensure fresh animation
+    clearAnimationFlags();
+    
     // Prevent any auto-scroll
     if (window.scrollY > 0) {
         window.scrollTo(0, window.scrollY);
     }
     
-    initHeroAnimations();
-    
-    // Initialize active menu item
-    updateActiveMenuItem();
-    
-    // Initialize active navigation
-    initActiveNavigation();
-    
-    // Add click event to button
-    const heroButton = document.querySelector('.hero-button');
-    if (heroButton) {
-        heroButton.addEventListener('click', handleButtonClick);
-    }
+    // Initialize preloader first
+    initPreloader();
     
     // Also initialize after a short delay to ensure DOM is fully ready
     setTimeout(() => {
         console.log('Delayed initialization...');
-        initHeroAnimations();
-        updateActiveMenuItem();
+        // Preloader will handle main page initialization
     }, 200);
 });
 
@@ -581,6 +867,8 @@ window.addEventListener('scroll', () => {
     animateOnScroll();
     handleParallax();
     handleHeaderScroll();
+    // Force callback button check on scroll
+    handleCallbackButtonTransform();
 });
 
 // Header scroll effect with glassmorphism
@@ -599,6 +887,83 @@ function handleHeaderScroll() {
 
     // Update active menu item based on scroll position
     updateActiveMenuItem();
+    
+    // Handle callback button transformation
+    handleCallbackButtonTransform();
+}
+
+// Callback button transformation logic
+function handleCallbackButtonTransform() {
+    const callbackButton = document.querySelector('.callback-round-button');
+    const callbackContainer = document.querySelector('.callback-button-container');
+    const heroSection = document.querySelector('.hero');
+    
+    if (!callbackButton || !heroSection) return;
+    
+    const scrollY = window.scrollY;
+    const heroHeight = heroSection.offsetHeight;
+    const heroBottom = heroSection.offsetTop + heroHeight;
+    const isMobile = window.innerWidth <= 768;
+    
+    // Check if hero section is out of view (more sensitive trigger)
+    const shouldAttach = scrollY > (heroBottom - 200);
+    
+    console.log('Scroll check:', {
+        scrollY: scrollY,
+        heroBottom: heroBottom,
+        shouldAttach: shouldAttach,
+        isMobile: isMobile
+    });
+    
+    if (shouldAttach) {
+        // Create attached button if it doesn't exist
+        let attachedButton = document.querySelector('.callback-attached-button');
+        if (!attachedButton) {
+            attachedButton = callbackButton.cloneNode(true);
+            attachedButton.classList.remove('callback-round-button');
+            attachedButton.classList.add('callback-attached-button');
+            attachedButton.onclick = callbackButton.onclick;
+            
+            // Replace text with phone icon
+            attachedButton.innerHTML = '<i class="ph ph-phone"></i>';
+            
+            document.body.appendChild(attachedButton);
+            console.log('Created attached button with phone icon');
+        }
+        
+        // Hide original button
+        callbackButton.style.display = 'none';
+        
+        // Show attached button with appropriate class
+        attachedButton.style.display = 'flex';
+        if (isMobile) {
+            attachedButton.classList.remove('attached');
+            attachedButton.classList.add('mobile-attached');
+            console.log('Added mobile-attached class');
+        } else {
+            attachedButton.classList.remove('mobile-attached');
+            attachedButton.classList.add('attached');
+            console.log('Added attached class');
+        }
+    } else {
+        // Show original button
+        callbackButton.style.display = 'flex';
+        
+        // Hide attached button with animation
+        const attachedButton = document.querySelector('.callback-attached-button');
+        if (attachedButton) {
+            // Add disappearing animation
+            attachedButton.classList.add('disappearing');
+            
+            // Remove button after animation completes
+            setTimeout(() => {
+                attachedButton.remove();
+                console.log('Removed attached button');
+            }, 800);
+        }
+        
+        console.log('Removed all attached classes');
+    }
 }
 
 // Update active menu item based on scroll position
@@ -659,10 +1024,7 @@ function handleParallax() {
 // Preload images when page loads
 window.addEventListener('load', () => {
     preloadImages();
-    // Force initialize animations after a short delay
-    setTimeout(() => {
-        initHeroAnimations();
-    }, 100);
+    // Preloader will handle main page initialization
 });
 
 // Handle window resize to recalculate layout
@@ -701,6 +1063,9 @@ window.addEventListener('resize', () => {
             dropdown.classList.remove('active');
         });
         console.log('Closed all dropdowns on resize');
+        
+        // Recalculate callback button position on resize
+        handleCallbackButtonTransform();
     }, 250);
 });
 
