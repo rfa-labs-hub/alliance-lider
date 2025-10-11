@@ -559,28 +559,14 @@ body.dark-theme .dropdown-link {
     position: relative;
 }
 
-/* Hero Image */
-.hero-image {
-    position: absolute;
-    top: 10px;
-    left: calc(12% + 150px);
-    right: 20px;
-    width: calc(100vw - 12% - 150px - 20px);
-    height: 85vh;
-    z-index: 1;
-    overflow: hidden;
-    padding: 0;
-    opacity: 0;
-    transform: translateY(10px) scale(1.05);
-    /* Animation will be triggered by JavaScript after preloader */
-}
+/* Hero Image - moved to .hero-slide .hero-image */
 
 /* Animation is now handled by JavaScript */
 
 .hero-image img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
     object-position: center;
     display: block;
     transition: filter 0.5s ease;
@@ -589,15 +575,15 @@ body.dark-theme .dropdown-link {
 }
 
 
-/* Light theme - subtle enhancement */
+/* Light theme - enhanced contrast for better visibility */
 body:not(.dark-theme) .hero-image img {
-    filter: brightness(1.05) contrast(0.95);
+    filter: brightness(0.8) contrast(1.1);
     transition: filter 0.5s ease;
 }
 
-/* Dark theme - enhanced contrast for better visibility */
+/* Dark theme - subtle enhancement */
 body.dark-theme .hero-image img {
-    filter: brightness(0.8) contrast(1.1);
+    filter: brightness(1.05) contrast(0.95);
     transition: filter 0.5s ease;
 }
 
@@ -613,43 +599,9 @@ body.dark-theme .hero-image img {
     width: 100%;
 }
 
-/* Title overlay positioned over collage area */
-.hero-title-overlay {
-    position: absolute !important;
-    top: calc(50% - 205px) !important;
-    left: 121px !important;
-    right: 308px !important;
-    width: calc(100vw - 121px - 308px) !important;
-    height: auto !important;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    z-index: 10000 !important;
-    pointer-events: none;
-    padding: 5px;
-    box-sizing: border-box;
-    margin: 0;
-    transform: translateY(-50%) !important;
-}
+/* Title overlay - moved to .hero-slide .hero-title-overlay */
 
-/* Button overlay positioned over collage area */
-.hero-button-overlay {
-    position: absolute !important;
-    top: calc(50% - 23px) !important;
-    left: 121px !important;
-    right: 71px !important;
-    width: calc(100vw - 121px - 71px) !important;
-    height: auto !important;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    z-index: 10000 !important;
-    pointer-events: none;
-    padding: 5px;
-    box-sizing: border-box;
-    margin: 0;
-    transform: translateY(-50%) !important;
-}
+/* Button overlay - moved to .hero-slide .hero-button-overlay */
 
 
 .hero-content {
@@ -782,12 +734,12 @@ body.dark-theme .hero-image img {
 /* Callback Button Container */
 .callback-button-container {
     position: absolute !important;
-    top: calc(50% - 20px) !important;
-    left: 910px !important;
-    z-index: 10000 !important;
+    top: 50% !important;
+    right: 160px !important;
+    z-index: 10001 !important;
     pointer-events: auto;
     opacity: 0;
-    transform: translateY(40px);
+    transform: translateY(-50%);
     transition: all 0.6s ease;
 }
 
@@ -795,6 +747,467 @@ body.dark-theme .hero-image img {
     opacity: 1;
     transform: translateY(0);
 }
+
+/* Hero Slider Styles */
+.hero-slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.hero-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: scale(1.05) translateX(100%);
+    filter: blur(8px);
+    opacity: 0;
+    transition: all 1s cubic-bezier(0.45, 0, 0.55, 1);
+    z-index: 1;
+}
+
+.hero-slide.active {
+    transform: scale(1) translateX(0);
+    filter: blur(0px);
+    opacity: 1;
+    z-index: 2;
+}
+
+.hero-slide:first-child.active {
+    transform: scale(1) translateX(0);
+    filter: blur(0px);
+    opacity: 1;
+    z-index: 2;
+}
+
+.hero-slide:first-child.active .hero-title-overlay,
+.hero-slide:first-child.active .hero-button-overlay {
+    opacity: 1;
+}
+
+/* New title overlay for slides 2, 3, 4 - identical to slide 1 */
+.hero-title-overlay-new {
+    position: absolute !important;
+    top: calc(50% - 185px) !important;
+    left: 115px !important;
+    right: 205px !important;
+    width: calc(100vw - 320px) !important;
+    height: auto !important;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    z-index: 10000 !important;
+    pointer-events: none;
+    padding: 5px;
+    box-sizing: border-box;
+    margin: 0;
+    transform: translateY(-50%) !important;
+    opacity: 0;
+    transition: opacity 1s cubic-bezier(0.45, 0, 0.55, 1), transform 1s cubic-bezier(0.45, 0, 0.55, 1);
+}
+
+.hero-slide.active .hero-title-overlay-new {
+    opacity: 1;
+}
+
+.hero-title-new {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    font-size: 48px;
+    color: var(--light-text);
+    margin: 0;
+    line-height: 1.2;
+    text-align: left;
+}
+
+body.dark-theme .hero-title-new {
+    color: var(--dark-text);
+}
+
+.hero-slide .hero-image {
+    position: absolute;
+    top: -15px;
+    left: 120px;
+    right: 120px;
+    width: calc(100vw - 240px);
+    height: calc(100vh - 60px);
+    z-index: 1;
+    overflow: hidden;
+    padding: 0;
+    opacity: 1;
+    transform: none;
+}
+
+.hero-slide .hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    image-rendering: smooth;
+    position: relative;
+}
+
+.hero-slide .hero-title-overlay {
+    position: absolute !important;
+    top: calc(50% - 185px) !important;
+    left: 115px !important;
+    right: 205px !important;
+    width: calc(100vw - 320px) !important;
+    height: auto !important;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    z-index: 10000 !important;
+    pointer-events: none;
+    padding: 5px;
+    box-sizing: border-box;
+    margin: 0;
+    transform: translateY(-50%) !important;
+    opacity: 0;
+    transition: opacity 1s cubic-bezier(0.45, 0, 0.55, 1), transform 1s cubic-bezier(0.45, 0, 0.55, 1);
+}
+
+.hero-slide.active .hero-title-overlay {
+    opacity: 1;
+}
+
+.hero-slide .hero-title {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.8s ease;
+}
+
+.hero-slide .hero-title.animate {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+
+.hero-slide .hero-button-overlay {
+    position: absolute !important;
+    top: calc(50% - 20px) !important;
+    left: 115px !important;
+    right: 205px !important;
+    width: calc(100vw - 320px) !important;
+    height: auto !important;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    z-index: 10000 !important;
+    pointer-events: none;
+    padding: 5px;
+    box-sizing: border-box;
+    margin: 0;
+    transform: translateY(-50%) !important;
+    opacity: 0;
+    transition: opacity 1s cubic-bezier(0.45, 0, 0.55, 1), transform 1s cubic-bezier(0.45, 0, 0.55, 1);
+}
+
+.hero-slide.active .hero-button-overlay {
+    opacity: 1;
+}
+
+.hero-slide .hero-button {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.8s ease;
+}
+
+.hero-slide .hero-button.animate {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+
+/* Hero Indicators */
+.hero-indicators {
+    position: absolute;
+    bottom: 110px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+    z-index: 10001;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border-radius: 4px;
+    padding: 12px 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0.6;
+}
+
+.indicator.active {
+    background-color: var(--accent);
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+.indicator:hover {
+    opacity: 0.8;
+    transform: scale(1.1);
+}
+
+/* Second slide image positioning */
+.hero-slide:nth-child(2) .hero-image {
+    top: 0px;
+    height: calc(100vh - 75px);
+}
+
+/* Ensure title is visible on second slide */
+.hero-slide:nth-child(2) .hero-title-overlay {
+    z-index: 10001 !important;
+    opacity: 0;
+}
+
+.hero-slide:nth-child(2).active .hero-title-overlay {
+    opacity: 1 !important;
+}
+
+.hero-slide:nth-child(2) .hero-title {
+    color: #000000 !important;
+}
+
+body.dark-theme .hero-slide:nth-child(2) .hero-title {
+    color: #ffffff !important;
+}
+
+.hero-slide:nth-child(2) .hero-title-overlay {
+    left: 125px !important;
+    top: calc(50% - 245px) !important;
+}
+
+.hero-slide:nth-child(2) .hero-button-overlay {
+    z-index: 10001 !important;
+    top: calc(50% - 3px) !important;
+    width: calc(50vw - 120px) !important;
+    left: 115px !important;
+    right: auto !important;
+    justify-content: flex-start !important;
+    opacity: 0;
+}
+
+.hero-slide:nth-child(2).active .hero-button-overlay {
+    opacity: 1 !important;
+}
+
+.hero-slide:nth-child(2) .hero-button {
+    background-color: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 0;
+    padding: 40px 50px 300px 50px;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 300;
+    font-size: 28px;
+    line-height: 1.4;
+    cursor: pointer;
+    transition: all 0.8s ease;
+    position: relative;
+    z-index: 10;
+    opacity: 1;
+    transform: none;
+    text-decoration: none;
+    display: inline-block;
+    text-align: left;
+    width: auto;
+    box-sizing: border-box;
+}
+
+/* Services button on second slide */
+.hero-slide:nth-child(2) .hero-services-button-overlay {
+    position: absolute !important;
+    top: calc(50% + 60px) !important;
+    left: 120px !important;
+    right: auto !important;
+    width: calc(50vw - 149px) !important;
+    z-index: 10001 !important;
+    opacity: 0;
+    transition: opacity 1s cubic-bezier(0.45, 0, 0.55, 1), transform 1s cubic-bezier(0.45, 0, 0.55, 1);
+}
+
+.hero-slide:nth-child(2).active .hero-services-button-overlay {
+    opacity: 1;
+}
+
+.hero-slide:nth-child(2) .hero-services-button {
+    background-color: #efede3;
+    color: var(--accent);
+    border: none;
+    border-radius: 0;
+    padding: 20px 40px;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 1.2;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.hero-slide:nth-child(2) .hero-services-button:hover {
+    background-color: var(--accent);
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Dark theme styles for services button */
+body.dark-theme .hero-slide:nth-child(2) .hero-services-button {
+    background-color: #252422;
+    color: var(--accent);
+}
+
+.hero-slide:nth-child(2) .hero-services-button:hover {
+    background-color: rgba(212, 83, 25, 0.15);
+    color: white;
+}
+
+body.dark-theme .hero-slide:nth-child(2) .hero-services-button:hover {
+    background-color: rgba(212, 83, 25, 0.15);
+    color: white;
+}
+
+/* Apply same styles to slides 3 and 4 */
+.hero-slide:nth-child(3) .hero-image,
+.hero-slide:nth-child(4) .hero-image {
+    top: 0px;
+    height: calc(100vh - 75px);
+}
+
+.hero-slide:nth-child(3) .hero-title-overlay,
+.hero-slide:nth-child(4) .hero-title-overlay {
+    z-index: 10001 !important;
+    left: 125px !important;
+    top: calc(50% - 245px) !important;
+    opacity: 0;
+}
+
+.hero-slide:nth-child(3).active .hero-title-overlay,
+.hero-slide:nth-child(4).active .hero-title-overlay {
+    opacity: 1 !important;
+}
+
+.hero-slide:nth-child(3) .hero-title,
+.hero-slide:nth-child(4) .hero-title {
+    color: #000000 !important;
+}
+
+body.dark-theme .hero-slide:nth-child(3) .hero-title,
+body.dark-theme .hero-slide:nth-child(4) .hero-title {
+    color: #ffffff !important;
+}
+
+.hero-slide:nth-child(3) .hero-button-overlay,
+.hero-slide:nth-child(4) .hero-button-overlay {
+    z-index: 10001 !important;
+    top: calc(50% - 3px) !important;
+    width: calc(50vw - 120px) !important;
+    left: 115px !important;
+    right: auto !important;
+    justify-content: flex-start !important;
+    opacity: 0;
+}
+
+.hero-slide:nth-child(3).active .hero-button-overlay,
+.hero-slide:nth-child(4).active .hero-button-overlay {
+    opacity: 1 !important;
+}
+
+.hero-slide:nth-child(3) .hero-button,
+.hero-slide:nth-child(4) .hero-button {
+    background-color: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 0;
+    padding: 40px 50px 300px 50px;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 300;
+    font-size: 28px;
+    line-height: 1.4;
+    cursor: pointer;
+    transition: all 0.8s ease;
+    position: relative;
+    z-index: 10;
+    opacity: 1;
+    transform: none;
+    text-decoration: none;
+    display: inline-block;
+    text-align: left;
+    width: auto;
+    box-sizing: border-box;
+}
+
+.hero-slide:nth-child(3) .hero-services-button-overlay,
+.hero-slide:nth-child(4) .hero-services-button-overlay {
+    position: absolute !important;
+    top: calc(50% + 60px) !important;
+    left: 120px !important;
+    right: auto !important;
+    width: calc(50vw - 149px) !important;
+    z-index: 10001 !important;
+    opacity: 0;
+    transition: opacity 1s cubic-bezier(0.45, 0, 0.55, 1), transform 1s cubic-bezier(0.45, 0, 0.55, 1);
+}
+
+.hero-slide:nth-child(3).active .hero-services-button-overlay,
+.hero-slide:nth-child(4).active .hero-services-button-overlay {
+    opacity: 1;
+}
+
+.hero-slide:nth-child(3) .hero-services-button,
+.hero-slide:nth-child(4) .hero-services-button {
+    background-color: #efede3;
+    color: var(--accent);
+    border: none;
+    border-radius: 0;
+    padding: 20px 40px;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 1.2;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+body.dark-theme .hero-slide:nth-child(3) .hero-services-button,
+body.dark-theme .hero-slide:nth-child(4) .hero-services-button {
+    background-color: #252422;
+    color: var(--accent);
+}
+
+.hero-slide:nth-child(3) .hero-services-button:hover,
+.hero-slide:nth-child(4) .hero-services-button:hover {
+    background-color: rgba(212, 83, 25, 0.15);
+    color: white;
+}
+
+body.dark-theme .hero-slide:nth-child(3) .hero-services-button:hover,
+body.dark-theme .hero-slide:nth-child(4) .hero-services-button:hover {
+    background-color: rgba(212, 83, 25, 0.15);
+    color: white;
+}
+
 
 /* Round Callback Button */
 .callback-round-button {
@@ -1894,6 +2307,155 @@ body.dark-theme .trust-text {
         display: flex;
         flex-direction: column;
         height: auto;
+    }
+
+    /* Mobile hero styles moved to .hero-slide styles */
+
+    /* Mobile callback button */
+    .callback-button-container {
+        right: 80px !important;
+    }
+
+    /* Mobile hero slider styles */
+    .hero-slide .hero-image {
+        top: -15px;
+        left: 60px;
+        right: 60px;
+        width: calc(100vw - 120px);
+        height: calc(100vh - 0px);
+    }
+
+    .hero-slide .hero-title-overlay {
+        left: 35px !important;
+        right: 125px !important;
+        width: calc(100vw - 160px) !important;
+    }
+
+    .hero-slide .hero-button-overlay {
+        left: 35px !important;
+        right: 125px !important;
+        width: calc(100vw - 160px) !important;
+    }
+
+    /* Mobile indicators */
+    .hero-indicators {
+        bottom: 100px;
+        gap: 10px;
+        padding: 10px 16px;
+    }
+
+    .indicator {
+        width: 10px;
+        height: 10px;
+    }
+
+    /* Mobile second slide image positioning */
+    .hero-slide:nth-child(2) .hero-image {
+        top: 0px;
+        height: calc(100vh - 15px);
+    }
+
+    /* Ensure title is visible on second slide mobile */
+    .hero-slide:nth-child(2) .hero-title-overlay {
+        z-index: 10001 !important;
+        left: 45px !important;
+        opacity: 0;
+    }
+
+    .hero-slide:nth-child(2).active .hero-title-overlay {
+        opacity: 1 !important;
+    }
+
+    .hero-slide:nth-child(2) .hero-button-overlay {
+        z-index: 10001 !important;
+        left: 55px !important;
+        right: auto !important;
+        width: calc(50vw - 60px) !important;
+        opacity: 0;
+    }
+
+    .hero-slide:nth-child(2).active .hero-button-overlay {
+        opacity: 1 !important;
+    }
+
+    .hero-slide:nth-child(2) .hero-button {
+        padding: 30px 20px 290px 20px;
+        font-size: 24px;
+    }
+
+    /* Mobile services button */
+    .hero-slide:nth-child(2) .hero-services-button-overlay {
+        left: 60px !important;
+        top: calc(50% + 40px) !important;
+        width: calc(50vw - 89px) !important;
+    }
+
+    .hero-slide:nth-child(2) .hero-services-button {
+        padding: 15px 30px;
+        font-size: 16px;
+    }
+
+    /* Mobile styles for slides 3 and 4 */
+    .hero-slide:nth-child(3) .hero-image,
+    .hero-slide:nth-child(4) .hero-image {
+        top: 0px;
+        height: calc(100vh - 15px);
+    }
+
+    .hero-slide:nth-child(3) .hero-title-overlay,
+    .hero-slide:nth-child(4) .hero-title-overlay {
+        z-index: 10001 !important;
+        left: 45px !important;
+        opacity: 0;
+    }
+
+    .hero-slide:nth-child(3).active .hero-title-overlay,
+    .hero-slide:nth-child(4).active .hero-title-overlay {
+        opacity: 1 !important;
+    }
+
+    .hero-slide:nth-child(3) .hero-button-overlay,
+    .hero-slide:nth-child(4) .hero-button-overlay {
+        z-index: 10001 !important;
+        left: 55px !important;
+        right: auto !important;
+        width: calc(50vw - 60px) !important;
+        opacity: 0;
+    }
+
+    .hero-slide:nth-child(3).active .hero-button-overlay,
+    .hero-slide:nth-child(4).active .hero-button-overlay {
+        opacity: 1 !important;
+    }
+
+    /* Mobile styles for new title overlay */
+    .hero-title-overlay-new {
+        left: 35px !important;
+        right: 125px !important;
+        width: calc(100vw - 160px) !important;
+    }
+
+    .hero-title-new {
+        font-size: 32px;
+    }
+
+    .hero-slide:nth-child(3) .hero-button,
+    .hero-slide:nth-child(4) .hero-button {
+        padding: 30px 20px 290px 20px;
+        font-size: 24px;
+    }
+
+    .hero-slide:nth-child(3) .hero-services-button-overlay,
+    .hero-slide:nth-child(4) .hero-services-button-overlay {
+        left: 60px !important;
+        top: calc(50% + 40px) !important;
+        width: calc(50vw - 89px) !important;
+    }
+
+    .hero-slide:nth-child(3) .hero-services-button,
+    .hero-slide:nth-child(4) .hero-services-button {
+        padding: 15px 30px;
+        font-size: 16px;
     }
 
     .hero-collage {

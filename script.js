@@ -1489,3 +1489,155 @@ function initYandexMap() {
     }
 }
 
+// Hero Slider functionality
+let currentSlide = 0;
+let slideInterval;
+const slides = document.querySelectorAll('.hero-slide');
+const indicators = document.querySelectorAll('.indicator');
+const totalSlides = slides.length;
+
+// Touch/swipe variables
+let startX = 0;
+let startY = 0;
+let endX = 0;
+let endY = 0;
+let isDragging = false;
+
+// Touch event handlers
+function handleTouchStart(e) {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+    isDragging = true;
+}
+
+function handleTouchMove(e) {
+    if (!isDragging) return;
+    e.preventDefault();
+}
+
+function handleTouchEnd(e) {
+    if (!isDragging) return;
+    
+    endX = e.changedTouches[0].clientX;
+    endY = e.changedTouches[0].clientY;
+    
+    const deltaX = startX - endX;
+    const deltaY = startY - endY;
+    
+    // Check if horizontal swipe is more significant than vertical
+    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
+        if (deltaX > 0) {
+            // Swipe left - next slide
+            nextSlide();
+        } else {
+            // Swipe right - previous slide
+            prevSlide();
+        }
+    }
+    
+    isDragging = false;
+}
+
+// Navigation functions
+function nextSlide() {
+    const nextIndex = (currentSlide + 1) % totalSlides;
+    showSlide(nextIndex);
+    restartAutoSlide();
+}
+
+function prevSlide() {
+    const prevIndex = (currentSlide - 1 + totalSlides) % totalSlides;
+    showSlide(prevIndex);
+    restartAutoSlide();
+}
+
+// Initialize slider
+function initHeroSlider() {
+    if (slides.length === 0) return;
+    
+    // Set initial slide
+    showSlide(0);
+    
+    // Start auto-slide
+    startAutoSlide();
+    
+    // Add click events to indicators
+    indicators.forEach((indicator, index) => {
+        indicator.addEventListener('click', () => {
+            goToSlide(index);
+        });
+    });
+    
+    // Add touch events for mobile swipe
+    const heroSection = document.querySelector('.hero');
+    if (heroSection) {
+        heroSection.addEventListener('touchstart', handleTouchStart, { passive: false });
+        heroSection.addEventListener('touchmove', handleTouchMove, { passive: false });
+        heroSection.addEventListener('touchend', handleTouchEnd, { passive: false });
+        
+        // Pause auto-slide on hover (desktop)
+        heroSection.addEventListener('mouseenter', pauseAutoSlide);
+        heroSection.addEventListener('mouseleave', startAutoSlide);
+    }
+}
+
+// Show specific slide
+function showSlide(index) {
+    // Remove all classes from slides
+    slides.forEach(slide => {
+        slide.classList.remove('active', 'prev');
+    });
+    indicators.forEach(indicator => indicator.classList.remove('active'));
+    
+    // Add active class to current slide and indicator
+    if (slides[index]) {
+        slides[index].classList.add('active');
+    }
+    if (indicators[index]) {
+        indicators[index].classList.add('active');
+    }
+    
+    currentSlide = index;
+}
+
+// Go to specific slide
+function goToSlide(index) {
+    showSlide(index);
+    // Restart auto-slide after manual navigation
+    startAutoSlide();
+}
+
+// Start auto-slide
+function startAutoSlide() {
+    // Clear existing interval
+    if (slideInterval) {
+        clearInterval(slideInterval);
+    }
+    
+    // Set new interval (5 seconds)
+    slideInterval = setInterval(() => {
+        currentSlide = (currentSlide + 1) % totalSlides;
+        showSlide(currentSlide);
+    }, 5000);
+}
+
+// Pause auto-slide
+function pauseAutoSlide() {
+    if (slideInterval) {
+        clearInterval(slideInterval);
+    }
+}
+
+function restartAutoSlide() {
+    pauseAutoSlide();
+    startAutoSlide();
+}
+
+// Initialize slider when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Wait for preloader to finish
+    setTimeout(() => {
+        initHeroSlider();
+    }, 1000);
+});
+
