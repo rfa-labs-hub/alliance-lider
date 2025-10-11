@@ -224,36 +224,13 @@ function animateHeroImage(element, duration = 2000) {
 
 // Start hero image animation after preloader
 function startHeroImageAnimation() {
-    console.log('startHeroImageAnimation called');
-    const heroImage = document.querySelector('.hero-image');
-    
-    if (heroImage) {
-        console.log('Hero image element found:', heroImage);
-        console.log('Current hero image styles:', {
-            opacity: window.getComputedStyle(heroImage).opacity,
-            transform: window.getComputedStyle(heroImage).transform,
-            display: window.getComputedStyle(heroImage).display
-        });
-        
-        // Always animate hero image after preloader (remove sessionStorage check)
-        console.log('Starting hero image animation after preloader');
-        
-        // Set initial state
-        heroImage.style.opacity = '0';
-        heroImage.style.transform = 'translateY(10px) scale(1.05)';
-        heroImage.style.animation = 'none';
-        
-        console.log('Set initial state, starting animation in 100ms');
-        
-        // Start JavaScript animation
-        setTimeout(() => {
-            console.log('Starting animateHeroImage function');
-            animateHeroImage(heroImage, 1600);
-        }, 100);
-    } else {
-        console.error('Hero image element not found!');
-    }
+    console.log('startHeroImageAnimation called - now handled by startHeroSlide1Animation');
+    // Hero image animation is now handled by the new startHeroSlide1Animation function
+    // This function is kept for compatibility but does nothing
 }
+
+// Initialize theme on page load
+initTheme();
 
 // Initialize preloader
 function initPreloader() {
@@ -281,6 +258,22 @@ function initPreloader() {
     }
 }
 
+// Theme management functions
+function initTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    const body = document.body;
+    const header = document.querySelector('.header');
+    
+    // Only apply theme if it's not already applied by inline script
+    if (savedTheme === 'dark' && !body.classList.contains('dark-theme')) {
+        body.classList.add('dark-theme');
+        if (header) header.classList.add('dark-theme');
+    } else if (savedTheme === 'light' && body.classList.contains('dark-theme')) {
+        body.classList.remove('dark-theme');
+        if (header) header.classList.remove('dark-theme');
+    }
+}
+
 // Theme toggle functionality
 function toggleTheme() {
     const body = document.body;
@@ -301,6 +294,10 @@ function toggleTheme() {
     body.classList.toggle('dark-theme');
     header.classList.toggle('dark-theme');
     
+    // Save theme preference to localStorage
+    const isDarkTheme = body.classList.contains('dark-theme');
+    localStorage.setItem('theme', isDarkTheme ? 'dark' : 'light');
+    
     // Remove transition after animation completes
     setTimeout(() => {
         body.style.transition = '';
@@ -310,90 +307,40 @@ function toggleTheme() {
 
 // Hero animations sequence
 function initHeroAnimations() {
-    const heroTitle = document.querySelector('.hero-title-overlay .hero-title');
-    const heroButton = document.querySelector('.hero-button-overlay .hero-button');
-    const heroCollage = document.querySelector('.hero-collage');
-    const collageItems = document.querySelectorAll('.hero-collage .hero-collage-item');
-    const callbackButtonContainer = document.querySelector('.callback-button-container');
-    const heroImage = document.querySelector('.hero-image');
-
     console.log('Initializing hero animations...');
-    console.log('Hero title element:', heroTitle);
-    console.log('Hero button element:', heroButton);
-    console.log('Hero collage element:', heroCollage);
-    console.log('Hero image element:', heroImage);
-    console.log('Collage items count:', collageItems.length);
     
-    // Hero image animation is now handled separately in startHeroImageAnimation()
+    // No animation - just ensure all elements are visible
+    const heroImage = document.querySelector('.hero-image');
+    const heroTitle = document.querySelector('.hero-title');
+    const heroButton = document.querySelector('.hero-button');
+    const callbackButtonContainer = document.querySelector('.callback-button-container');
     
-    // Check initial states and force them if needed
-    if (heroCollage) {
-        console.log('Initial collage opacity:', window.getComputedStyle(heroCollage).opacity);
-        // Force initial state
-        heroCollage.style.opacity = '0';
-        heroCollage.style.transform = 'translateY(20px)';
+    // Make sure all elements are visible
+    if (heroImage) {
+        heroImage.style.opacity = '1';
+        heroImage.style.transform = 'none';
+        console.log('Hero image made visible');
     }
+    
     if (heroTitle) {
-        console.log('Initial title opacity:', window.getComputedStyle(heroTitle).opacity);
-        // Force initial state
-        heroTitle.style.opacity = '0';
-        heroTitle.style.transform = 'translateY(10px)';
+        heroTitle.style.opacity = '1';
+        heroTitle.style.transform = 'none';
+        console.log('Hero title made visible');
     }
+    
     if (heroButton) {
-        console.log('Initial button opacity:', window.getComputedStyle(heroButton).opacity);
-        // Force initial state
-        heroButton.style.opacity = '0';
-        heroButton.style.transform = 'translateY(10px)';
+        heroButton.style.opacity = '1';
+        heroButton.style.transform = 'none';
+        console.log('Hero button made visible');
     }
-
-    // 1. Animate collage container (fade-in + slide-up)
-    setTimeout(() => {
-        if (heroCollage) {
-            console.log('Adding animate class to collage');
-            heroCollage.classList.add('animate');
-            console.log('Collage classes after animation:', heroCollage.className);
-            console.log('Collage computed styles:', window.getComputedStyle(heroCollage).opacity);
-        } else {
-            // Collage element not found - probably on services page
-        }
-    }, 100);
-
-    // 2. Animate collage items with staggered delays (fade-in + scale-up)
-    collageItems.forEach((item, index) => {
-        // Force initial state for each item
-        item.style.opacity = '0';
-        item.style.transform = 'scale(0.9)';
-        
-        setTimeout(() => {
-            item.classList.add('animate');
-        }, 300 + (index * 150));
-    });
-
-    // 3. Animate title (fade-in + slide-up) with delay after collage
-    setTimeout(() => {
-        if (heroTitle) {
-            console.log('Adding animate class to title');
-            heroTitle.classList.add('animate');
-            console.log('Title classes after animation:', heroTitle.className);
-            console.log('Title computed styles:', window.getComputedStyle(heroTitle).opacity);
-        } else {
-            // Title element not found - probably on services page
-        }
-    }, 1200);
-
-    // 4. Animate button (fade-in + slide-up)
-    setTimeout(() => {
-        if (heroButton) {
-            heroButton.classList.add('animate');
-        }
-    }, 1400);
-
-    // 5. Animate callback button (fade-in-up)
-    setTimeout(() => {
-        if (callbackButtonContainer) {
-            callbackButtonContainer.classList.add('animate');
-        }
-    }, 1800);
+    
+    if (callbackButtonContainer) {
+        callbackButtonContainer.style.opacity = '1';
+        callbackButtonContainer.style.transform = 'none';
+        console.log('Callback button made visible');
+    }
+    
+    console.log('All hero elements are now visible');
 }
 
 // Scroll animations for other elements
@@ -619,6 +566,7 @@ function openDocumentModal(documentName) {
         iframe.src = `images/docs/${fileName}`;
         modal.style.display = 'block';
         document.body.style.overflow = 'hidden';
+        document.body.classList.remove('modal-closed'); // Remove horizontal scroll prevention
         
         // Trigger animation
         setTimeout(() => {
@@ -638,6 +586,7 @@ function closeDocumentModal() {
         modal.style.display = 'none';
         iframe.src = ''; // Clear iframe source
         document.body.style.overflow = 'auto';
+        document.body.classList.add('modal-closed'); // Prevent horizontal scroll
     }, 300);
 }
 
@@ -1074,6 +1023,7 @@ function openCallbackModal() {
     const modal = document.getElementById('callbackModal');
     modal.style.display = 'block';
     document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    document.body.classList.remove('modal-closed'); // Remove horizontal scroll prevention
     
     // Trigger animation
     setTimeout(() => {
@@ -1089,6 +1039,7 @@ function closeCallbackModal() {
     setTimeout(() => {
         modal.style.display = 'none';
         document.body.style.overflow = 'auto'; // Restore scrolling
+        document.body.classList.add('modal-closed'); // Prevent horizontal scroll
     }, 300);
 }
 
@@ -1122,6 +1073,7 @@ function openAboutModal() {
     const modal = document.getElementById('aboutModal');
     modal.style.display = 'block';
     document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    document.body.classList.remove('modal-closed'); // Remove horizontal scroll prevention
     
     // Trigger animation
     setTimeout(() => {
@@ -1137,6 +1089,7 @@ function closeAboutModal() {
     setTimeout(() => {
         modal.style.display = 'none';
         document.body.style.overflow = 'auto'; // Restore scrolling
+        document.body.classList.add('modal-closed'); // Prevent horizontal scroll
     }, 300);
 }
 
@@ -1217,6 +1170,7 @@ function openRequisitesModal() {
     const modal = document.getElementById('requisitesModal');
     modal.style.display = 'block';
     document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    document.body.classList.remove('modal-closed'); // Remove horizontal scroll prevention
     
     // Trigger animation
     setTimeout(() => {
@@ -1232,6 +1186,7 @@ function closeRequisitesModal() {
     setTimeout(() => {
         modal.style.display = 'none';
         document.body.style.overflow = 'auto'; // Restore scrolling
+        document.body.classList.add('modal-closed'); // Prevent horizontal scroll
     }, 300);
 }
 

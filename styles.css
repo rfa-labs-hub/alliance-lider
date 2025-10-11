@@ -158,6 +158,7 @@ body {
     }
 }
 
+
 /* Hero collage elegant fade-in animation */
 @keyframes heroFadeIn {
     0% {
@@ -168,6 +169,15 @@ body {
         opacity: 1;
         transform: translateY(0) scale(1);
     }
+}
+
+/* Hero elements - always visible */
+.hero-image,
+.hero-title,
+.hero-button,
+.callback-button-container {
+    opacity: 1 !important;
+    transform: none !important;
 }
 
 /* Dark theme preloader */
@@ -235,6 +245,11 @@ body {
     overflow-x: hidden;
 }
 
+/* Prevent horizontal scroll when modal is closed */
+body.modal-closed {
+    overflow-x: hidden !important;
+}
+
 body.dark-theme {
     background-color: var(--dark-bg);
     color: var(--dark-text);
@@ -249,7 +264,7 @@ body.dark-theme {
     top: 0;
     left: 0;
     right: 0;
-    z-index: 10001;
+    z-index: 10003;
     transition: all 0.4s ease;
     box-shadow: none;
 }
@@ -793,7 +808,7 @@ body.dark-theme .hero-image img {
 /* New title overlay for slides 2, 3, 4 - identical to slide 1 */
 .hero-title-overlay-new {
     position: absolute !important;
-    top: calc(50% - 185px) !important;
+    top: calc(50% - 220px) !important;
     left: 115px !important;
     right: 205px !important;
     width: calc(100vw - 320px) !important;
@@ -815,6 +830,28 @@ body.dark-theme .hero-image img {
     opacity: 1;
 }
 
+/* Special positioning for slide 3 title */
+.hero-slide:nth-child(3) .hero-title-overlay-new {
+    top: calc(50% - 237px) !important;
+}
+
+
+/* Adjust button overlay positioning for slide 3 */
+.hero-slide:nth-child(3) .hero-button-overlay {
+    left: 127px !important;
+}
+
+/* Add extra width to the right for slide 3 button */
+.hero-slide:nth-child(3) .hero-button {
+    padding-right: 111.5px !important;
+}
+
+/* Add extra width to the right for slide 4 button */
+.hero-slide:nth-child(4) .hero-button {
+    padding-right: 93px !important;
+}
+
+
 .hero-title-new {
     font-family: 'Playfair Display', serif;
     font-weight: 600;
@@ -823,6 +860,7 @@ body.dark-theme .hero-image img {
     margin: 0;
     line-height: 1.2;
     text-align: left;
+    white-space: pre-line;
 }
 
 body.dark-theme .hero-title-new {
@@ -855,7 +893,7 @@ body.dark-theme .hero-title-new {
 
 .hero-slide .hero-title-overlay {
     position: absolute !important;
-    top: calc(50% - 185px) !important;
+    top: calc(50% - 175px) !important;
     left: 115px !important;
     right: 205px !important;
     width: calc(100vw - 320px) !important;
@@ -1150,6 +1188,7 @@ body.dark-theme .hero-slide:nth-child(4) .hero-title {
     display: inline-block;
     text-align: left;
     width: auto;
+    min-width: 425px;
     box-sizing: border-box;
 }
 
@@ -1477,7 +1516,7 @@ body.dark-theme .callback-round-button.mobile-attached:hover {
 .modal {
     display: none;
     position: fixed;
-    z-index: 10002;
+    z-index: 10004;
     left: 0;
     top: 0;
     width: 100%;
@@ -2736,7 +2775,7 @@ body.dark-theme .trust-us-logo-large:hover img {
 .staff-section {
     width: 100%;
     padding: 100px 0 30px 0;
-    background: rgba(212, 83, 25, 0.15);
+    background: linear-gradient(to bottom, rgba(228, 227, 218, 0.95), #e4e3da);
     position: relative;
     opacity: 0;
     transform: translateY(50px);
@@ -2744,7 +2783,7 @@ body.dark-theme .trust-us-logo-large:hover img {
 }
 
 body.dark-theme .staff-section {
-    background: rgba(212, 83, 25, 0.15);
+    background: linear-gradient(to bottom, rgba(37, 36, 34, 0.95), #252422);
 }
 
 .staff-section.animate {
@@ -2926,7 +2965,7 @@ body.dark-theme .staff-position {
 .documents-section {
     width: 100%;
     padding: 100px 0;
-    background: rgba(212, 83, 25, 0.15);
+    background: linear-gradient(to bottom, rgba(239, 237, 227, 0.95), #efede3);
     position: relative;
     opacity: 0;
     transform: translateY(50px);
@@ -2934,7 +2973,7 @@ body.dark-theme .staff-position {
 }
 
 body.dark-theme .documents-section {
-    background: rgba(212, 83, 25, 0.15);
+    background: #302f2c;
 }
 
 .documents-section.animate {

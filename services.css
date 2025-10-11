@@ -16,14 +16,15 @@ body.dark-theme .services-page {
     position: absolute;
     left: 0;
     top: 80px;
-    width: 250px;
+    width: 300px;
+    max-width: 300px;
     height: calc(100vh - 80px);
     max-height: calc(100vh - 80px);
     background-color: var(--light-bg);
     border-right: 1px solid rgba(212, 83, 25, 0.2);
     z-index: 1000;
     overflow: hidden;
-    transition: width 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: max-width 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 body.dark-theme .categories-panel {
@@ -32,25 +33,26 @@ body.dark-theme .categories-panel {
 }
 
 .categories-panel.collapsed {
-    width: 60px;
+    max-width: 60px;
     z-index: 1001;
 }
 
 .categories-panel:not(.collapsed) {
-    width: 250px;
+    max-width: 300px;
 }
 
 /* Анимация привлечения внимания только для свернутой панели */
 .categories-panel.collapsed.animate-attention {
     animation: gentle-open 4s infinite;
+    transition: none; /* Отключаем transition во время анимации */
 }
 
 @keyframes gentle-open {
     0%, 70%, 100% {
-        width: 60px;
+        max-width: 60px;
     }
     80% {
-        width: 100px; /* 40% от 250px = 100px */
+        max-width: 120px; /* 40% от 300px = 120px */
     }
 }
 
@@ -60,7 +62,7 @@ body.dark-theme .categories-panel {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    transition: opacity 0.5s ease-in-out;
+    transition: opacity 1.2s ease-in-out;
 }
 
 .categories-panel.collapsed .panel-content {
@@ -86,24 +88,24 @@ body.dark-theme .panel-title {
     padding: 0;
     margin: 0;
     flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-auto-rows: minmax(40px, 1fr);
+    gap: 1px;
     height: 100%;
-    gap: 2px;
+    overflow: hidden;
 }
 
 .category-item {
     display: flex;
     align-items: center;
-    padding: 6px 4px;
-    margin-bottom: 2px;
+    padding: 8px 6px;
+    margin-bottom: 0;
     border-radius: 0;
     cursor: pointer;
     transition: background-color 0.3s ease;
     position: relative;
-    min-height: 32px;
-    flex: 1;
+    min-height: 40px;
 }
 
 .category-item:hover {
@@ -125,9 +127,9 @@ body.dark-theme .panel-title {
 }
 
 .category-icon {
-    width: 18px;
-    height: 18px;
-    margin-right: 8px;
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -142,6 +144,51 @@ body.dark-theme .panel-title {
     filter: none;
 }
 
+/* Special larger icon for height work */
+.category-item[data-category="height-work"] {
+    margin-left: -12px;
+}
+
+.category-item[data-category="height-work"] .category-icon {
+    width: 48px;
+    height: 48px;
+    margin-right: 10px;
+}
+
+.category-item[data-category="height-work"] .category-name {
+    margin-left: -12px;
+}
+
+/* Special larger icon for industrial safety */
+.category-item[data-category="industrial-safety"] {
+    margin-left: -12px;
+}
+
+.category-item[data-category="industrial-safety"] .category-icon {
+    width: 48px;
+    height: 48px;
+    margin-right: 10px;
+}
+
+.category-item[data-category="industrial-safety"] .category-name {
+    margin-left: -12px;
+}
+
+/* Special larger icon for worker professions */
+.category-item[data-category="worker-professions"] {
+    margin-left: -12px;
+}
+
+.category-item[data-category="worker-professions"] .category-icon {
+    width: 48px;
+    height: 48px;
+    margin-right: 10px;
+}
+
+.category-item[data-category="worker-professions"] .category-name {
+    margin-left: -12px;
+}
+
 /* Автоперекраска иконок */
 body:not(.dark-theme) .category-icon img {
     filter: none; /* Чёрные в светлой теме */
@@ -154,7 +201,7 @@ body.dark-theme .category-icon img {
 .category-name {
     font-family: 'Manrope', sans-serif;
     font-weight: 500;
-    font-size: 11px;
+    font-size: 13px;
     line-height: 1.1;
     color: var(--light-text);
     transition: color 0.3s ease;
@@ -234,7 +281,7 @@ body.dark-theme .category-name {
 /* Services Content */
 .services-content {
     flex: 1;
-    margin-left: 250px;
+    margin-left: 300px;
     padding: 40px;
     transition: margin-left 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
