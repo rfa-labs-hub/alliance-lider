@@ -1328,12 +1328,64 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const callbackForm = document.querySelector('.callback-form');
     if (callbackForm) {
-        callbackForm.addEventListener('submit', (event) => {
+        callbackForm.addEventListener('submit', async (event) => {
             event.preventDefault();
-            // Here you would normally send the data to a server
-            alert('Заявка отправлена! Мы свяжемся с вами в ближайшее время.');
-            closeCallbackModal();
-            callbackForm.reset();
+            
+            // Получаем элементы кнопки
+            const submitButton = document.getElementById('submitButton');
+            const buttonText = submitButton.querySelector('.button-text');
+            const buttonLoading = submitButton.querySelector('.button-loading');
+            
+            // Получаем данные формы
+            const formData = new FormData(callbackForm);
+            const name = formData.get('name');
+            const phone = formData.get('phone');
+            const reason = formData.get('reason');
+            
+            // Проверяем заполненность полей
+            if (!name || !phone || !reason) {
+                alert('Пожалуйста, заполните все обязательные поля.');
+                return;
+            }
+            
+            // Блокируем кнопку и показываем загрузку
+            submitButton.disabled = true;
+            buttonText.style.display = 'none';
+            buttonLoading.style.display = 'flex';
+            
+            try {
+                // Отправляем данные на сервер
+                const response = await fetch('http://localhost:5000/send_telegram', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        name: name,
+                        phone: phone,
+                        reason: reason
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    alert('Заявка отправлена! Мы свяжемся с вами в ближайшее время.');
+                    closeCallbackModal();
+                    callbackForm.reset();
+                } else {
+                    alert('Произошла ошибка при отправке заявки. Попробуйте еще раз.');
+                    console.error('Ошибка отправки:', result.error);
+                }
+            } catch (error) {
+                alert('Произошла ошибка при отправке заявки. Проверьте подключение к интернету.');
+                console.error('Ошибка сети:', error);
+            } finally {
+                // Восстанавливаем состояние кнопки
+                submitButton.disabled = false;
+                buttonText.style.display = 'block';
+                buttonLoading.style.display = 'none';
+            }
         });
     }
     
@@ -1467,7 +1519,15 @@ function handleTouchStart(e) {
 
 function handleTouchMove(e) {
     if (!isDragging) return;
-    e.preventDefault();
+    
+    // Разрешаем вертикальный скролл, блокируем только горизонтальный
+    const deltaX = Math.abs(e.touches[0].clientX - startX);
+    const deltaY = Math.abs(e.touches[0].clientY - startY);
+    
+    // Блокируем только если горизонтальное движение больше вертикального
+    if (deltaX > deltaY && deltaX > 10) {
+        e.preventDefault();
+    }
 }
 
 function handleTouchEnd(e) {
@@ -1480,7 +1540,8 @@ function handleTouchEnd(e) {
     const deltaY = startY - endY;
     
     // Check if horizontal swipe is more significant than vertical
-    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
+    // Увеличиваем порог для более точного определения свайпов
+    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 80) {
         if (deltaX > 0) {
             // Swipe left - next slide
             nextSlide();
