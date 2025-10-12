@@ -2391,9 +2391,34 @@ body.dark-theme .trust-text {
 
     /* Mobile hero styles moved to .hero-slide styles */
 
-    /* Mobile callback button */
+    /* Mobile callback button - сворачивается в правый нижний угол */
     .callback-button-container {
-        right: 80px !important;
+        position: fixed !important;
+        bottom: 20px !important;
+        right: 20px !important;
+        top: auto !important;
+        transform: none !important;
+        z-index: 10002 !important;
+    }
+    
+    .callback-button {
+        width: 60px !important;
+        height: 60px !important;
+        border-radius: 50% !important;
+        padding: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        font-size: 24px !important;
+        box-shadow: 0 4px 20px rgba(212, 83, 25, 0.4) !important;
+    }
+    
+    .callback-button .button-text {
+        display: none !important;
+    }
+    
+    .callback-button .button-icon {
+        display: block !important;
     }
 
     /* Mobile hero slider styles */
@@ -2423,22 +2448,22 @@ body.dark-theme .trust-text {
         content: url('images/mobile/4_hero.jpg');
     }
 
-    /* Эффект размытия и градиента для мобильных изображений */
+    /* Эффект размытия на всю фотографию для мобильных изображений */
     .hero-slide .hero-image::before {
         content: '';
         position: absolute;
         top: 0;
         left: 0;
         right: 0;
-        height: 60%;
+        bottom: 0;
+        height: 100%;
         background: linear-gradient(
             to bottom,
-            rgba(0, 0, 0, 0.7) 0%,
-            rgba(0, 0, 0, 0.4) 30%,
-            rgba(0, 0, 0, 0.1) 60%,
-            transparent 100%
+            rgba(0, 0, 0, 0.6) 0%,
+            rgba(0, 0, 0, 0.3) 50%,
+            rgba(0, 0, 0, 0.1) 100%
         );
-        backdrop-filter: blur(2px);
+        backdrop-filter: blur(3px);
         z-index: 2;
         pointer-events: none;
     }
@@ -2447,7 +2472,7 @@ body.dark-theme .trust-text {
         left: 20px !important;
         right: 20px !important;
         width: calc(100vw - 40px) !important;
-        top: 15% !important;
+        top: 8% !important;
         transform: none !important;
     }
 
@@ -2455,7 +2480,7 @@ body.dark-theme .trust-text {
         left: 20px !important;
         right: 20px !important;
         width: calc(100vw - 40px) !important;
-        top: calc(50% + 20px) !important;
+        top: calc(50% + 0px) !important;
     }
 
     .hero-slide .hero-button {
@@ -2479,7 +2504,7 @@ body.dark-theme .trust-text {
         left: 15px !important;
         right: 15px !important;
         width: calc(100vw - 30px) !important;
-        top: 12% !important;
+        top: 6% !important;
         transform: none !important;
     }
 
@@ -2487,7 +2512,7 @@ body.dark-theme .trust-text {
         left: 15px !important;
         right: 15px !important;
         width: calc(100vw - 30px) !important;
-        top: calc(50% + 30px) !important;
+        top: calc(50% + 10px) !important;
     }
 
     .hero-slide .hero-button {
@@ -2505,6 +2530,18 @@ body.dark-theme .trust-text {
     .indicator {
         width: 8px;
         height: 8px;
+    }
+
+    /* Кнопка заказать звонок для очень маленьких экранов */
+    .callback-button-container {
+        bottom: 15px !important;
+        right: 15px !important;
+    }
+    
+    .callback-button {
+        width: 50px !important;
+        height: 50px !important;
+        font-size: 20px !important;
     }
 
     /* Mobile second slide image positioning */
