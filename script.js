@@ -416,12 +416,6 @@ function animateOnScroll() {
     // Animate about section elements
     animateAboutSection();
     
-    // Animate legal help section elements
-    animateLegalHelpSection();
-    
-    // Animate investigations section elements
-    animateInvestigationsSection();
-    
     // Animate trust section elements
     animateTrustSection();
     
@@ -444,7 +438,6 @@ function animateAboutSection() {
     const aboutIntro = document.querySelector('.about-intro');
     const aboutButton = document.querySelector('.about-more-button');
     const aboutImage = document.querySelector('.about-image');
-    const aboutInfoItems = document.querySelectorAll('.about-info-item');
     
     if (aboutTitle) {
         const aboutSection = document.querySelector('.about-section');
@@ -465,128 +458,16 @@ function animateAboutSection() {
                 if (aboutIntro) aboutIntro.classList.add('animate');
             }, 400);
             
-            // Animate info items
-            setTimeout(() => {
-                aboutInfoItems.forEach((item, index) => {
-                    setTimeout(() => {
-                        item.style.opacity = '1';
-                        item.style.transform = 'translateY(0)';
-                    }, index * 100);
-                });
-            }, 600);
-            
             // Animate button
             setTimeout(() => {
                 if (aboutButton) aboutButton.classList.add('animate');
-            }, 800);
+            }, 600);
             
             // Animate image
             setTimeout(() => {
                 if (aboutImage) aboutImage.classList.add('animate');
-            }, 1000);
+            }, 800);
         }
-    }
-}
-
-// Legal Help Section Animation
-function animateLegalHelpSection() {
-    const section = document.querySelector('.legal-help-section');
-    if (!section) return;
-    
-    const rect = section.getBoundingClientRect();
-    const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
-    
-    if (isVisible && !section.classList.contains('animate')) {
-        section.classList.add('animate');
-        
-        // Animate title
-        setTimeout(() => {
-            const title = section.querySelector('.legal-help-title');
-            if (title) {
-                title.style.opacity = '1';
-                title.style.transform = 'translateX(0)';
-            }
-        }, 200);
-        
-        // Animate intro
-        setTimeout(() => {
-            const intro = section.querySelector('.legal-help-intro');
-            if (intro) {
-                intro.style.opacity = '1';
-                intro.style.transform = 'translateY(0)';
-            }
-        }, 400);
-        
-        // Animate items
-        setTimeout(() => {
-            const items = section.querySelectorAll('.legal-help-item');
-            items.forEach((item, index) => {
-                setTimeout(() => {
-                    item.style.opacity = '1';
-                    item.style.transform = 'translateY(0)';
-                }, index * 100);
-            });
-        }, 600);
-        
-        // Animate image
-        setTimeout(() => {
-            const image = section.querySelector('.legal-help-image');
-            if (image) {
-                image.style.opacity = '1';
-                image.style.transform = 'scale(1)';
-            }
-        }, 800);
-    }
-}
-
-// Investigations Section Animation
-function animateInvestigationsSection() {
-    const section = document.querySelector('.investigations-section');
-    if (!section) return;
-    
-    const rect = section.getBoundingClientRect();
-    const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
-    
-    if (isVisible && !section.classList.contains('animate')) {
-        section.classList.add('animate');
-        
-        // Animate title
-        setTimeout(() => {
-            const title = section.querySelector('.investigations-title');
-            if (title) {
-                title.style.opacity = '1';
-                title.style.transform = 'translateX(0)';
-            }
-        }, 200);
-        
-        // Animate intro
-        setTimeout(() => {
-            const intro = section.querySelector('.investigations-intro');
-            if (intro) {
-                intro.style.opacity = '1';
-                intro.style.transform = 'translateY(0)';
-            }
-        }, 400);
-        
-        // Animate items
-        setTimeout(() => {
-            const items = section.querySelectorAll('.investigations-item');
-            items.forEach((item, index) => {
-                setTimeout(() => {
-                    item.style.opacity = '1';
-                    item.style.transform = 'translateY(0)';
-                }, index * 100);
-            });
-        }, 600);
-        
-        // Animate image
-        setTimeout(() => {
-            const image = section.querySelector('.investigations-image');
-            if (image) {
-                image.style.opacity = '1';
-                image.style.transform = 'scale(1)';
-            }
-        }, 800);
     }
 }
 
