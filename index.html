@@ -15,7 +15,7 @@
     <div id="preloader" class="preloader">
         <div class="preloader-content">
             <div class="preloader-logo">
-                <img src="images/logo.png" alt="Логотип">
+                <img src="images/logos/black_logo.png" alt="Логотип" class="preloader-logo-img">
             </div>
             <div class="preloader-percentage" id="preloaderPercentage">0%</div>
             <div class="preloader-progress">
@@ -29,7 +29,7 @@
         <div class="header-container">
             <div class="logo">
                 <a href="index.html">
-                    <img src="images/logo.png" alt="Логотип">
+                    <img src="images/logos/black_logo.png" alt="Логотип" class="header-logo-img">
                 </a>
             </div>
             <nav>
@@ -37,7 +37,7 @@
                     <li class="nav-item dropdown">
                         <a href="index.html" class="nav-link">Главная</a>
                         <ul class="dropdown-menu">
-                            <li><a href="#about" class="dropdown-link">О компании</a></li>
+                            <li><a href="#about" class="dropdown-link">Сведения об организации</a></li>
                             <li><a href="#staff" class="dropdown-link">Наши сотрудники</a></li>
                             <li><a href="#" class="dropdown-link" onclick="openRequisitesModal()">Реквизиты</a></li>
                             <li><a href="#documents" class="dropdown-link">Документы</a></li>
@@ -59,10 +59,10 @@
                             <li><a href="services.html#accident-investigation" class="dropdown-link">Расследование несчастных случаев</a></li>
                         </ul>
                     </li>
-                    <li><a href="#investigations">Расследование несчастных случаев</a></li>
-                    <li><a href="#info">Информация</a></li>
-                    <li><a href="#cooperation">Для сотрудничества</a></li>
-                    <li><a href="account.html">Личный кабинет</a></li>
+                    <li><a href="#investigations" class="nav-link">Расследование несчастных случаев</a></li>
+                    <li><a href="#legal-help" class="nav-link">Правовая помощь</a></li>
+                    <li><a href="#about" class="nav-link">Сведения об организации</a></li>
+                    <li><a href="account.html" class="nav-link">Личный кабинет</a></li>
                 </ul>
             </nav>
             <button class="theme-toggle" onclick="toggleTheme()">
@@ -156,19 +156,95 @@
         </div>
     </section>
 
+           <!-- Legal Help Section -->
+           <section id="legal-help" class="legal-help-section">
+               <div class="legal-help-content">
+                   <h2 class="legal-help-title">Правовая помощь</h2>
+                   
+                   <div class="legal-help-grid">
+                       <div class="legal-help-text-column">
+                           <p class="legal-help-intro">Мы оказываем профессиональную правовую помощь в сфере охраны труда и трудовых отношений.</p>
+                           <div class="legal-help-services">
+                               <div class="legal-help-item">
+                                   <h3>Консультации по трудовому праву</h3>
+                                   <p>Помощь в решении вопросов, связанных с трудовыми отношениями и охраной труда</p>
+                               </div>
+                               <div class="legal-help-item">
+                                   <h3>Составление документов</h3>
+                                   <p>Подготовка договоров, инструкций и других документов по охране труда</p>
+                               </div>
+                               <div class="legal-help-item">
+                                   <h3>Представительство в суде</h3>
+                                   <p>Защита интересов работодателей и работников в трудовых спорах</p>
+                               </div>
+                           </div>
+                       </div>
+                       
+                       <div class="legal-help-image-column">
+                           <img src="images/2.jpg" alt="Правовая помощь" class="legal-help-image">
+                       </div>
+                   </div>
+               </div>
+           </section>
+
+           <!-- Investigations Section -->
+           <section id="investigations" class="investigations-section">
+               <div class="investigations-content">
+                   <h2 class="investigations-title">Расследование несчастных случаев</h2>
+                   
+                   <div class="investigations-grid">
+                       <div class="investigations-text-column">
+                           <p class="investigations-intro">Профессиональное расследование несчастных случаев на производстве с соблюдением всех требований законодательства.</p>
+                           <div class="investigations-services">
+                               <div class="investigations-item">
+                                   <h3>Расследование несчастных случаев</h3>
+                                   <p>Полное расследование с составлением актов и определением причин</p>
+                               </div>
+                               <div class="investigations-item">
+                                   <h3>Анализ причин</h3>
+                                   <p>Выявление системных причин и разработка мер профилактики</p>
+                               </div>
+                               <div class="investigations-item">
+                                   <h3>Правовая поддержка</h3>
+                                   <p>Помощь в урегулировании споров с контролирующими органами</p>
+                               </div>
+                           </div>
+                       </div>
+                       
+                       <div class="investigations-image-column">
+                           <img src="images/3.jpg" alt="Расследование несчастных случаев" class="investigations-image">
+                       </div>
+                   </div>
+               </div>
+           </section>
+
            <!-- About Section -->
            <section id="about" class="about-section">
                <div class="about-content">
-                   <h2 class="about-title">О компании</h2>
+                   <h2 class="about-title">Сведения об организации</h2>
                    
                    <div class="about-grid">
                        <div class="about-text-column">
                            <p class="about-intro">АНО ДПО УЦ «Альянс-Лидер» оказывает образовательные услуги в сфере охраны труда и безопасности уже более 10 лет.</p>
+                           <div class="about-info">
+                               <div class="about-info-item">
+                                   <h3>Лицензия</h3>
+                                   <p>Федеральная лицензия на образовательную деятельность</p>
+                               </div>
+                               <div class="about-info-item">
+                                   <h3>Опыт работы</h3>
+                                   <p>Более 10 лет в сфере охраны труда и безопасности</p>
+                               </div>
+                               <div class="about-info-item">
+                                   <h3>Документы</h3>
+                                   <p>Выдача документов установленного образца</p>
+                               </div>
+                           </div>
                            <button class="about-more-button" onclick="openAboutModal()">Подробнее</button>
                        </div>
                        
                        <div class="about-image-column">
-                           <img src="images/1.jpg" alt="О компании" class="about-image">
+                           <img src="images/1.jpg" alt="Сведения об организации" class="about-image">
                        </div>
                    </div>
                </div>
@@ -529,7 +605,7 @@
     <div class="footer-bottom-bar">
         <div class="footer-bottom-content">
             <div class="footer-logo">
-                <img src="images/logo.png" alt="Логотип" class="footer-logo-img">
+                <img src="images/logos/white_logo.png" alt="Логотип" class="footer-logo-img">
             </div>
             <p class="footer-copyright">© АНО ДПО УЦ «Альянс-Лидер», 2025</p>
             <div class="footer-social">

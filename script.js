@@ -272,6 +272,9 @@ function initTheme() {
         body.classList.remove('dark-theme');
         if (header) header.classList.remove('dark-theme');
     }
+    
+    // Update logos based on current theme
+    updateLogosForTheme();
 }
 
 // Theme toggle functionality
@@ -294,6 +297,9 @@ function toggleTheme() {
     body.classList.toggle('dark-theme');
     header.classList.toggle('dark-theme');
     
+    // Update logos based on theme
+    updateLogosForTheme();
+    
     // Save theme preference to localStorage
     const isDarkTheme = body.classList.contains('dark-theme');
     localStorage.setItem('theme', isDarkTheme ? 'dark' : 'light');
@@ -303,6 +309,57 @@ function toggleTheme() {
         body.style.transition = '';
         header.style.transition = '';
     }, 400);
+}
+
+// Function to update logos based on current theme with smooth animation
+function updateLogosForTheme() {
+    const isDarkTheme = document.body.classList.contains('dark-theme');
+    
+    // Get all logo elements
+    const headerLogo = document.querySelector('.header-logo-img');
+    const preloaderLogo = document.querySelector('.preloader-logo-img');
+    const footerLogo = document.querySelector('.footer-logo-img');
+    
+    // Function to animate logo change with enhanced effects
+    function animateLogoChange(logoElement, newSrc) {
+        if (!logoElement) return;
+        
+        // Add animating class for fade-out effect
+        logoElement.classList.remove('animating-in');
+        logoElement.classList.add('animating');
+        
+        // Change source after fade-out
+        setTimeout(() => {
+            logoElement.src = newSrc;
+            
+            // Add animating-in class for fade-in effect
+            logoElement.classList.remove('animating');
+            logoElement.classList.add('animating-in');
+            
+            // Clean up classes after animation
+            setTimeout(() => {
+                logoElement.classList.remove('animating-in');
+            }, 400);
+        }, 200); // Half of transition duration
+    }
+    
+    // Update header logo
+    if (headerLogo) {
+        const newHeaderSrc = isDarkTheme ? 'images/logos/white_logo.png' : 'images/logos/black_logo.png';
+        animateLogoChange(headerLogo, newHeaderSrc);
+    }
+    
+    // Update preloader logo
+    if (preloaderLogo) {
+        const newPreloaderSrc = isDarkTheme ? 'images/logos/white_logo.png' : 'images/logos/black_logo.png';
+        animateLogoChange(preloaderLogo, newPreloaderSrc);
+    }
+    
+    // Update footer logo
+    if (footerLogo) {
+        const newFooterSrc = isDarkTheme ? 'images/logos/black_logo.png' : 'images/logos/white_logo.png';
+        animateLogoChange(footerLogo, newFooterSrc);
+    }
 }
 
 // Hero animations sequence
@@ -359,6 +416,12 @@ function animateOnScroll() {
     // Animate about section elements
     animateAboutSection();
     
+    // Animate legal help section elements
+    animateLegalHelpSection();
+    
+    // Animate investigations section elements
+    animateInvestigationsSection();
+    
     // Animate trust section elements
     animateTrustSection();
     
@@ -381,6 +444,7 @@ function animateAboutSection() {
     const aboutIntro = document.querySelector('.about-intro');
     const aboutButton = document.querySelector('.about-more-button');
     const aboutImage = document.querySelector('.about-image');
+    const aboutInfoItems = document.querySelectorAll('.about-info-item');
     
     if (aboutTitle) {
         const aboutSection = document.querySelector('.about-section');
@@ -401,16 +465,128 @@ function animateAboutSection() {
                 if (aboutIntro) aboutIntro.classList.add('animate');
             }, 400);
             
+            // Animate info items
+            setTimeout(() => {
+                aboutInfoItems.forEach((item, index) => {
+                    setTimeout(() => {
+                        item.style.opacity = '1';
+                        item.style.transform = 'translateY(0)';
+                    }, index * 100);
+                });
+            }, 600);
+            
             // Animate button
             setTimeout(() => {
                 if (aboutButton) aboutButton.classList.add('animate');
-            }, 600);
+            }, 800);
             
             // Animate image
             setTimeout(() => {
                 if (aboutImage) aboutImage.classList.add('animate');
-            }, 800);
+            }, 1000);
         }
+    }
+}
+
+// Legal Help Section Animation
+function animateLegalHelpSection() {
+    const section = document.querySelector('.legal-help-section');
+    if (!section) return;
+    
+    const rect = section.getBoundingClientRect();
+    const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+    
+    if (isVisible && !section.classList.contains('animate')) {
+        section.classList.add('animate');
+        
+        // Animate title
+        setTimeout(() => {
+            const title = section.querySelector('.legal-help-title');
+            if (title) {
+                title.style.opacity = '1';
+                title.style.transform = 'translateX(0)';
+            }
+        }, 200);
+        
+        // Animate intro
+        setTimeout(() => {
+            const intro = section.querySelector('.legal-help-intro');
+            if (intro) {
+                intro.style.opacity = '1';
+                intro.style.transform = 'translateY(0)';
+            }
+        }, 400);
+        
+        // Animate items
+        setTimeout(() => {
+            const items = section.querySelectorAll('.legal-help-item');
+            items.forEach((item, index) => {
+                setTimeout(() => {
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        }, 600);
+        
+        // Animate image
+        setTimeout(() => {
+            const image = section.querySelector('.legal-help-image');
+            if (image) {
+                image.style.opacity = '1';
+                image.style.transform = 'scale(1)';
+            }
+        }, 800);
+    }
+}
+
+// Investigations Section Animation
+function animateInvestigationsSection() {
+    const section = document.querySelector('.investigations-section');
+    if (!section) return;
+    
+    const rect = section.getBoundingClientRect();
+    const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+    
+    if (isVisible && !section.classList.contains('animate')) {
+        section.classList.add('animate');
+        
+        // Animate title
+        setTimeout(() => {
+            const title = section.querySelector('.investigations-title');
+            if (title) {
+                title.style.opacity = '1';
+                title.style.transform = 'translateX(0)';
+            }
+        }, 200);
+        
+        // Animate intro
+        setTimeout(() => {
+            const intro = section.querySelector('.investigations-intro');
+            if (intro) {
+                intro.style.opacity = '1';
+                intro.style.transform = 'translateY(0)';
+            }
+        }, 400);
+        
+        // Animate items
+        setTimeout(() => {
+            const items = section.querySelectorAll('.investigations-item');
+            items.forEach((item, index) => {
+                setTimeout(() => {
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        }, 600);
+        
+        // Animate image
+        setTimeout(() => {
+            const image = section.querySelector('.investigations-image');
+            if (image) {
+                image.style.opacity = '1';
+                image.style.transform = 'scale(1)';
+            }
+        }, 800);
     }
 }
 
