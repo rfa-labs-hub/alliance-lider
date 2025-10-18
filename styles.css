@@ -878,7 +878,15 @@ body.dark-theme .hero-image img {
     opacity: 1;
 }
 
-/* Special positioning for slide 3 title */
+/* Special positioning for slide 2 title */
+.hero-slide:nth-child(2) .hero-title-overlay-new {
+    top: calc(50% - 232px) !important;
+}
+
+/* Special positioning for slide 4 title */
+.hero-slide:nth-child(4) .hero-title-overlay-new {
+    top: calc(50% - 233px) !important;
+}
 .hero-slide:nth-child(3) .hero-title-overlay-new {
     top: calc(50% - 237px) !important;
 }
@@ -887,11 +895,12 @@ body.dark-theme .hero-image img {
 /* Adjust button overlay positioning for slide 3 */
 .hero-slide:nth-child(3) .hero-button-overlay {
     left: 127px !important;
+    width: calc(50vw - 132px) !important;
 }
 
 /* Add extra width to the right for slide 3 button */
 .hero-slide:nth-child(3) .hero-button {
-    padding-right: 111.5px !important;
+    padding-right: 123.5px !important;
 }
 
 /* Add extra width to the right for slide 4 button */
@@ -1056,6 +1065,8 @@ body.dark-theme .hero-title-new {
 .hero-slide:nth-child(2) .hero-title-overlay {
     z-index: 10001 !important;
     opacity: 0;
+    left: 125px !important;
+    top: calc(50% - 252px) !important;
 }
 
 .hero-slide:nth-child(2).active .hero-title-overlay {
@@ -1070,15 +1081,10 @@ body.dark-theme .hero-slide:nth-child(2) .hero-title {
     color: #ffffff !important;
 }
 
-.hero-slide:nth-child(2) .hero-title-overlay {
-    left: 125px !important;
-    top: calc(50% - 245px) !important;
-}
-
 .hero-slide:nth-child(2) .hero-button-overlay {
     z-index: 10001 !important;
     top: calc(50% - 3px) !important;
-    width: calc(50vw - 120px) !important;
+    width: calc(50vw - 40px) !important;
     left: 115px !important;
     right: auto !important;
     justify-content: flex-start !important;
@@ -1094,7 +1100,7 @@ body.dark-theme .hero-slide:nth-child(2) .hero-title {
     color: white;
     border: none;
     border-radius: 0;
-    padding: 40px 50px 300px 50px;
+    padding: 40px 112px 300px 50px !important;
     font-family: 'Manrope', sans-serif;
     font-weight: 300;
     font-size: 28px;
@@ -1203,7 +1209,7 @@ body.dark-theme .hero-slide:nth-child(4) .hero-title {
 .hero-slide:nth-child(4) .hero-button-overlay {
     z-index: 10001 !important;
     top: calc(50% - 3px) !important;
-    width: calc(50vw - 120px) !important;
+    width: calc(50vw - 139px) !important;
     left: 115px !important;
     right: auto !important;
     justify-content: flex-start !important;
@@ -1215,7 +1221,30 @@ body.dark-theme .hero-slide:nth-child(4) .hero-title {
     opacity: 1 !important;
 }
 
-.hero-slide:nth-child(3) .hero-button,
+.hero-slide:nth-child(3) .hero-button {
+    background-color: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 0;
+    padding: 40px 62px 300px 50px;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 1.4;
+    cursor: pointer;
+    transition: all 0.8s ease;
+    position: relative;
+    z-index: 10;
+    opacity: 1;
+    transform: none;
+    text-decoration: none;
+    display: inline-block;
+    text-align: left;
+    width: auto;
+    min-width: 425px;
+    box-sizing: border-box;
+}
+
 .hero-slide:nth-child(4) .hero-button {
     background-color: var(--accent);
     color: white;
@@ -2615,7 +2644,7 @@ body.dark-theme .trust-text {
         z-index: 10001 !important;
         left: 55px !important;
         right: auto !important;
-        width: calc(50vw - 60px) !important;
+        width: calc(50vw + 20px) !important;
         opacity: 0;
     }
 
@@ -2626,6 +2655,7 @@ body.dark-theme .trust-text {
     .hero-slide:nth-child(2) .hero-button {
         padding: 30px 20px 290px 20px;
         font-size: 24px;
+        width: calc(100% + 20px);
     }
 
     /* Mobile services button */
