@@ -540,3 +540,89 @@ body.dark-theme .services-table tr:hover {
 }
 
 /* Services page uses the new footer styles from main styles.css */
+
+/* Promotions Section */
+.promotions-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.promotion-card {
+    background: linear-gradient(135deg, rgba(212, 83, 25, 0.1), rgba(212, 83, 25, 0.05));
+    border: 2px solid rgba(212, 83, 25, 0.2);
+    border-radius: 12px;
+    padding: 30px;
+    transition: all 0.3s ease;
+}
+
+body.dark-theme .promotion-card {
+    background: linear-gradient(135deg, rgba(212, 83, 25, 0.15), rgba(212, 83, 25, 0.08));
+    border-color: rgba(212, 83, 25, 0.3);
+}
+
+.promotion-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(212, 83, 25, 0.2);
+    border-color: rgba(212, 83, 25, 0.4);
+}
+
+body.dark-theme .promotion-card:hover {
+    box-shadow: 0 8px 25px rgba(212, 83, 25, 0.3);
+}
+
+.promotion-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--accent);
+    margin: 0 0 15px 0;
+}
+
+body.dark-theme .promotion-title {
+    color: var(--accent);
+}
+
+.promotion-content {
+    font-family: 'Manrope', sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--light-text);
+}
+
+body.dark-theme .promotion-content {
+    color: var(--dark-text);
+}
+
+.promotion-content p {
+    margin: 0 0 12px 0;
+}
+
+.promotion-content strong {
+    color: var(--accent);
+    font-weight: 600;
+}
+
+body.dark-theme .promotion-content strong {
+    color: #ff7f4d;
+}
+
+@media (max-width: 768px) {
+    .promotions-section {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .promotion-card {
+        padding: 20px;
+    }
+    
+    .promotion-title {
+        font-size: 20px;
+    }
+    
+    .promotion-content {
+        font-size: 15px;
+    }
+}

@@ -111,6 +111,7 @@ function showCategoryContent(category) {
     
     // Set title
     const categoryNames = {
+        'promotions': 'Акции и скидки',
         'labor-protection': 'Обучение охране труда',
         'electrical-safety': 'Электробезопасность',
         'height-work': 'Работы на высоте',
@@ -129,6 +130,8 @@ function showCategoryContent(category) {
     // Set content based on category
     if (category === 'worker-professions') {
         body.innerHTML = generateWorkerProfessionsTable();
+    } else if (category === 'promotions') {
+        body.innerHTML = generatePromotionsContent();
     } else {
         body.innerHTML = '<p>Информация по данной категории будет добавлена в ближайшее время.</p>';
     }
@@ -153,6 +156,28 @@ function showCategoryContent(category) {
         body.style.opacity = '1';
         body.style.transform = 'translateX(0)';
     }, 10);
+}
+
+function generatePromotionsContent() {
+    return `
+        <div class="promotions-section">
+            <div class="promotion-card">
+                <h3 class="promotion-title">Акция "Повторное обращение"</h3>
+                <div class="promotion-content">
+                    <p>При повторном заказе услуг скидка <strong>10%</strong></p>
+                    <p>Если вы ранее обращались к нам за услугами по обучению и получению допуска, при повторном обращении мы предоставляем скидку 10% на все услуги.</p>
+                </div>
+            </div>
+            
+            <div class="promotion-card">
+                <h3 class="promotion-title">Акция "Договор на год"</h3>
+                <div class="promotion-content">
+                    <p>При заключении договора о сотрудничестве на 1 год предоставляется скидка <strong>10%</strong> на услуги</p>
+                    <p>Оформите долгосрочное сотрудничество с нами и получите постоянную скидку 10% на все услуги. Это выгодно для компаний, которые регулярно проводят обучение своих сотрудников.</p>
+                </div>
+            </div>
+        </div>
+    `;
 }
 
 function generateWorkerProfessionsTable() {
@@ -402,6 +427,7 @@ function initDropdownMenus() {
 function handleServiceCategorySelection(categoryId) {
     // Map category IDs to data-category values
     const categoryMap = {
+        'promotions': 'promotions',
         'labor-protection': 'labor-protection',
         'electrical-safety': 'electrical-safety',
         'height-work': 'height-work',
