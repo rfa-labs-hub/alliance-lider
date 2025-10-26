@@ -105,6 +105,7 @@ function showCategoryContent(category) {
     const content = document.getElementById('categoryContent');
     const title = document.getElementById('contentTitle');
     const body = document.getElementById('contentBody');
+    const servicesCards = document.getElementById('servicesCards');
     
     // Hide placeholder
     placeholder.style.display = 'none';
@@ -129,11 +130,14 @@ function showCategoryContent(category) {
     
     // Set content based on category
     if (category === 'worker-professions') {
-        body.innerHTML = generateWorkerProfessionsTable();
+        body.innerHTML = '';
+        servicesCards.innerHTML = generateWorkerProfessionsCards();
     } else if (category === 'promotions') {
         body.innerHTML = generatePromotionsContent();
+        servicesCards.innerHTML = '';
     } else {
-        body.innerHTML = '<p>Информация по данной категории будет добавлена в ближайшее время.</p>';
+        body.innerHTML = '';
+        servicesCards.innerHTML = generateServiceCards(category);
     }
     
     // Show content with smooth animation
@@ -180,49 +184,139 @@ function generatePromotionsContent() {
     `;
 }
 
-function generateWorkerProfessionsTable() {
-    const professions = [
-        { name: 'Монтажник по монтажу стальных и железобетонных конструкций', price: '3500 руб' },
-        { name: 'Стропальщик', price: '3500 руб' },
-        { name: 'Обучение безопасным методам и приемам выполнения работ на высоте (1, 2, 3 группа), 20 часов', price: '1500 руб' },
-        { name: 'Бетонщик', price: '3500 руб' },
-        { name: 'Электрогазосварщик', price: '3500 руб' },
-        { name: 'Эксплуатация и ремонт грузоподъемных машин и механизмов (для рабочих люльки на подъемнике/вышке)', price: '3500 руб' },
-        { name: 'Машинист подъемника строительного', price: '3500 руб' },
-        { name: 'Маляр', price: '3500 руб' },
-        { name: 'Маляр (штукатур)', price: '3500 руб' },
-        { name: 'Облицовщик-плиточник', price: '3500 руб' },
-        { name: 'Монтажник наружных трубопроводов', price: '3500 руб' }
-    ];
+function generateServiceCards(category) {
+    const servicesData = {
+        'labor-protection': [
+            { image: 'images/services/1.png', price: '500 р', title: 'Пример 1' },
+            { image: 'images/services/1.png', price: '500 р', title: 'Пример 2' },
+            { image: 'images/services/1.png', price: '500 р', title: 'Пример 3' },
+            { image: 'images/services/1.png', price: '500 р', title: 'Пример 4' },
+            { image: 'images/services/1.png', price: '500 р', title: 'Пример 5' },
+            { image: 'images/services/1.png', price: '500 р', title: 'Пример 6' },
+            { image: 'images/services/1.png', price: '500 р', title: 'Пример 7' },
+            { image: 'images/services/1.png', price: '500 р', title: 'Пример 8' }
+        ],
+        'height-work': [
+            { image: 'images/services/3.png', price: '500 р', title: 'Пример 1' },
+            { image: 'images/services/3.png', price: '500 р', title: 'Пример 2' },
+            { image: 'images/services/3.png', price: '500 р', title: 'Пример 3' },
+            { image: 'images/services/3.png', price: '500 р', title: 'Пример 4' },
+            { image: 'images/services/3.png', price: '500 р', title: 'Пример 5' },
+            { image: 'images/services/3.png', price: '500 р', title: 'Пример 6' },
+            { image: 'images/services/3.png', price: '500 р', title: 'Пример 7' },
+            { image: 'images/services/3.png', price: '500 р', title: 'Пример 8' }
+        ],
+        'confined-spaces': [
+            { image: 'images/services/4.png', price: '500 р', title: 'Пример 1' },
+            { image: 'images/services/4.png', price: '500 р', title: 'Пример 2' },
+            { image: 'images/services/4.png', price: '500 р', title: 'Пример 3' },
+            { image: 'images/services/4.png', price: '500 р', title: 'Пример 4' },
+            { image: 'images/services/4.png', price: '500 р', title: 'Пример 5' },
+            { image: 'images/services/4.png', price: '500 р', title: 'Пример 6' },
+            { image: 'images/services/4.png', price: '500 р', title: 'Пример 7' },
+            { image: 'images/services/4.png', price: '500 р', title: 'Пример 8' }
+        ],
+        'fire-safety': [
+            { image: 'images/services/5.png', price: '500 р', title: 'Пример 1' },
+            { image: 'images/services/5.png', price: '500 р', title: 'Пример 2' },
+            { image: 'images/services/5.png', price: '500 р', title: 'Пример 3' },
+            { image: 'images/services/5.png', price: '500 р', title: 'Пример 4' },
+            { image: 'images/services/5.png', price: '500 р', title: 'Пример 5' },
+            { image: 'images/services/5.png', price: '500 р', title: 'Пример 6' },
+            { image: 'images/services/5.png', price: '500 р', title: 'Пример 7' },
+            { image: 'images/services/5.png', price: '500 р', title: 'Пример 8' }
+        ],
+        'industrial-safety': [
+            { image: 'images/services/6.png', price: '500 р', title: 'Пример 1' },
+            { image: 'images/services/6.png', price: '500 р', title: 'Пример 2' },
+            { image: 'images/services/6.png', price: '500 р', title: 'Пример 3' },
+            { image: 'images/services/6.png', price: '500 р', title: 'Пример 4' },
+            { image: 'images/services/6.png', price: '500 р', title: 'Пример 5' },
+            { image: 'images/services/6.png', price: '500 р', title: 'Пример 6' },
+            { image: 'images/services/6.png', price: '500 р', title: 'Пример 7' },
+            { image: 'images/services/6.png', price: '500 р', title: 'Пример 8' }
+        ],
+        'civil-defense': [
+            { image: 'images/services/8.png', price: '500 р', title: 'Пример 1' },
+            { image: 'images/services/8.png', price: '500 р', title: 'Пример 2' },
+            { image: 'images/services/8.png', price: '500 р', title: 'Пример 3' },
+            { image: 'images/services/8.png', price: '500 р', title: 'Пример 4' },
+            { image: 'images/services/8.png', price: '500 р', title: 'Пример 5' },
+            { image: 'images/services/8.png', price: '500 р', title: 'Пример 6' },
+            { image: 'images/services/8.png', price: '500 р', title: 'Пример 7' },
+            { image: 'images/services/8.png', price: '500 р', title: 'Пример 8' }
+        ],
+        'risk-assessment': [
+            { image: 'images/services/10.png', price: '500 р', title: 'Пример 1' },
+            { image: 'images/services/10.png', price: '500 р', title: 'Пример 2' },
+            { image: 'images/services/10.png', price: '500 р', title: 'Пример 3' },
+            { image: 'images/services/10.png', price: '500 р', title: 'Пример 4' },
+            { image: 'images/services/10.png', price: '500 р', title: 'Пример 5' },
+            { image: 'images/services/10.png', price: '500 р', title: 'Пример 6' },
+            { image: 'images/services/10.png', price: '500 р', title: 'Пример 7' },
+            { image: 'images/services/10.png', price: '500 р', title: 'Пример 8' }
+        ],
+        'accident-investigation': [
+            { image: 'images/services/11.png', price: '500 р', title: 'Пример 1' },
+            { image: 'images/services/11.png', price: '500 р', title: 'Пример 2' },
+            { image: 'images/services/11.png', price: '500 р', title: 'Пример 3' },
+            { image: 'images/services/11.png', price: '500 р', title: 'Пример 4' },
+            { image: 'images/services/11.png', price: '500 р', title: 'Пример 5' },
+            { image: 'images/services/11.png', price: '500 р', title: 'Пример 6' },
+            { image: 'images/services/11.png', price: '500 р', title: 'Пример 7' },
+            { image: 'images/services/11.png', price: '500 р', title: 'Пример 8' }
+        ]
+    };
     
-    let tableHTML = `
-        <p>Мы предлагаем обучение по следующим рабочим профессиям:</p>
-        <table class="services-table">
-            <thead>
-                <tr>
-                    <th>Название профессии</th>
-                    <th>Стоимость</th>
-                </tr>
-            </thead>
-            <tbody>
-    `;
+    const services = servicesData[category] || [];
     
-    professions.forEach(profession => {
-        tableHTML += `
-            <tr>
-                <td>${profession.name}</td>
-                <td>${profession.price}</td>
-            </tr>
+    if (services.length === 0) {
+        return '';
+    }
+    
+    let cardsHTML = '';
+    services.forEach(service => {
+        cardsHTML += `
+            <div class="service-card">
+                <div class="service-card-title">${service.title}</div>
+                <div class="service-card-price">${service.price}</div>
+                <button class="service-card-button" onclick="openCallbackModal()">Оставить заявку</button>
+            </div>
         `;
     });
     
-    tableHTML += `
-            </tbody>
-        </table>
-    `;
-    
-    return tableHTML;
+    return cardsHTML;
 }
+
+function generateWorkerProfessionsCards() {
+    const professions = [
+        { image: 'images/services/7.png', price: '3500 руб', title: 'Монтажник по монтажу стальных и железобетонных конструкций' },
+        { image: 'images/services/7.png', price: '3500 руб', title: 'Стропальщик' },
+        { image: 'images/services/7.png', price: '1500 руб', title: 'Обучение безопасным методам и приемам выполнения работ на высоте (1, 2, 3 группа), 20 часов' },
+        { image: 'images/services/7.png', price: '3500 руб', title: 'Бетонщик' },
+        { image: 'images/services/7.png', price: '3500 руб', title: 'Электрогазосварщик' },
+        { image: 'images/services/7.png', price: '3500 руб', title: 'Эксплуатация и ремонт грузоподъемных машин и механизмов' },
+        { image: 'images/services/7.png', price: '3500 руб', title: 'Машинист подъемника строительного' },
+        { image: 'images/services/7.png', price: '3500 руб', title: 'Маляр' },
+        { image: 'images/services/7.png', price: '3500 руб', title: 'Маляр (штукатур)' },
+        { image: 'images/services/7.png', price: '3500 руб', title: 'Облицовщик-плиточник' },
+        { image: 'images/services/7.png', price: '3500 руб', title: 'Монтажник наружных трубопроводов' }
+    ];
+    
+    let cardsHTML = '';
+    professions.forEach(profession => {
+        cardsHTML += `
+            <div class="service-card">
+                <div class="service-card-title">${profession.title}</div>
+                <div class="service-card-price">${profession.price}</div>
+                <button class="service-card-button" onclick="openCallbackModal()">Оставить заявку</button>
+            </div>
+        `;
+    });
+    
+    return cardsHTML;
+}
+
 
 // Active Navigation initialization
 function initActiveNavigation() {
