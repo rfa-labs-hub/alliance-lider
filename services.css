@@ -573,9 +573,9 @@ body.dark-theme .promotion-card:hover {
 }
 
 .promotion-title {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Manrope', sans-serif;
     font-size: 24px;
-    font-weight: 600;
+    font-weight: 700;
     color: var(--accent);
     margin: 0 0 15px 0;
 }
